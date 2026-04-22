@@ -22,6 +22,7 @@ pub fn write_atomic(path: &Path, contents: &str) -> Result<()> {
 }
 
 /// Pretty-print an absolute path with `~` for the user's home directory.
+#[allow(dead_code)]
 pub fn home_relative(path: &Path) -> String {
     if let Some(home) = dirs::home_dir() {
         if let Ok(stripped) = path.strip_prefix(&home) {

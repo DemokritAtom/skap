@@ -21,6 +21,7 @@ pub fn is_port_free(port: u16) -> bool {
 /// either already bound or reserved in the persistent registry.
 ///
 /// A port is considered "free" only if both checks pass.
+#[allow(dead_code)]
 pub fn find_free_port(base: u16, registry: &PortRegistry) -> u16 {
     find_free_port_excluding(base, registry, &[])
 }

@@ -3,7 +3,7 @@
 //! A template is a directory under `templates/<name>/` containing:
 //!  * `template.toml`   – metadata (name, language, services with ports)
 //!  * `*.tera`          – Tera files which are rendered to the target path
-//!                        with the `.tera` suffix stripped
+//!    with the `.tera` suffix stripped
 //!  * any other files   – copied verbatim
 //!
 //! Built-in templates ship as part of the binary via `include_dir`-style
@@ -19,6 +19,7 @@ use serde::Deserialize;
 use tera::{Context as TeraCtx, Tera};
 
 #[derive(Debug, Clone, Deserialize)]
+#[allow(dead_code)]
 pub struct TemplateMeta {
     pub template: TemplateInfo,
     #[serde(default)]
@@ -26,6 +27,7 @@ pub struct TemplateMeta {
 }
 
 #[derive(Debug, Clone, Deserialize)]
+#[allow(dead_code)]
 pub struct TemplateInfo {
     pub name: String,
     #[serde(default)]
@@ -35,6 +37,7 @@ pub struct TemplateInfo {
 }
 
 #[derive(Debug, Clone, Deserialize)]
+#[allow(dead_code)]
 pub struct ServiceSpec {
     pub name: String,
     #[serde(default)]
@@ -74,6 +77,7 @@ impl Template {
     }
 
     /// Names of every built-in template.
+    #[allow(dead_code)]
     pub fn builtin_names() -> Vec<&'static str> {
         builtin_templates().into_iter().map(|(n, _)| n).collect()
     }
@@ -148,12 +152,13 @@ fn to_pascal(s: &str) -> String {
 }
 
 fn to_snake(s: &str) -> String {
-    s.replace('-', "_").replace(' ', "_").to_ascii_lowercase()
+    s.replace(['-', ' '], "_").to_ascii_lowercase()
 }
 
 /// Optionally locate a template directory on disk (for development &
 /// user-provided templates). Returns `Some(path)` if `templates/<name>/`
 /// exists relative to the current working directory or `$CREO_TEMPLATES`.
+#[allow(dead_code)]
 pub fn find_template_dir(name: &str) -> Option<PathBuf> {
     if let Ok(env) = std::env::var("CREO_TEMPLATES") {
         let p = PathBuf::from(env).join(name);
