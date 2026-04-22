@@ -34,8 +34,13 @@ pub async fn run(args: MoveArgs) -> Result<()> {
         let _ = docker::compose(&old_path, &["down"]);
     }
 
-    std::fs::rename(&old_path, &new_path)
-        .with_context(|| format!("failed to move {} -> {}", old_path.display(), new_path.display()))?;
+    std::fs::rename(&old_path, &new_path).with_context(|| {
+        format!(
+            "failed to move {} -> {}",
+            old_path.display(),
+            new_path.display()
+        )
+    })?;
     output::success(&format!("Verschoben nach {}", new_path.display()));
 
     if let Some(e) = registry.get_mut(&args.project) {

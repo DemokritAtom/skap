@@ -66,7 +66,8 @@ impl Template {
                 files.push((path.to_string(), contents.to_string()));
             }
         }
-        let meta_raw = meta_raw.with_context(|| format!("template {name} missing template.toml"))?;
+        let meta_raw =
+            meta_raw.with_context(|| format!("template {name} missing template.toml"))?;
         let meta: TemplateMeta = toml::from_str(meta_raw)
             .with_context(|| format!("failed to parse template.toml for {name}"))?;
         Ok(Self { meta, files })
@@ -174,7 +175,10 @@ pub fn find_template_dir(name: &str) -> Option<PathBuf> {
 /// `(template_name, [(relative_path, contents), ...])`
 fn builtin_templates() -> Vec<(&'static str, Vec<(&'static str, &'static str)>)> {
     vec![
-        ("docker-only", crate::core::templates_data::DOCKER_ONLY.to_vec()),
+        (
+            "docker-only",
+            crate::core::templates_data::DOCKER_ONLY.to_vec(),
+        ),
         ("react", crate::core::templates_data::REACT.to_vec()),
         ("next", crate::core::templates_data::NEXT.to_vec()),
         ("vue", crate::core::templates_data::VUE.to_vec()),

@@ -31,8 +31,8 @@ impl PortRegistry {
         }
         let raw = std::fs::read_to_string(&path)
             .with_context(|| format!("failed to read {}", path.display()))?;
-        let r: Self = toml::from_str(&raw)
-            .with_context(|| format!("failed to parse {}", path.display()))?;
+        let r: Self =
+            toml::from_str(&raw).with_context(|| format!("failed to parse {}", path.display()))?;
         Ok(r)
     }
 

@@ -48,7 +48,10 @@ pub async fn run(args: ListArgs) -> Result<()> {
     }
 
     if rows.is_empty() {
-        println!("{}", "No projects registered yet. Try: creo new myapp".dimmed());
+        println!(
+            "{}",
+            "No projects registered yet. Try: creo new myapp".dimmed()
+        );
         return Ok(());
     }
 
@@ -63,7 +66,10 @@ pub async fn run(args: ListArgs) -> Result<()> {
 
     let widths = compute_widths(std::iter::once(&header).chain(rows.iter()));
     print_row(&header, &widths, true);
-    println!("{}", "─".repeat(widths.iter().sum::<usize>() + widths.len() * 2));
+    println!(
+        "{}",
+        "─".repeat(widths.iter().sum::<usize>() + widths.len() * 2)
+    );
     for r in &rows {
         print_row(r, &widths, false);
     }

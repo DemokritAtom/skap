@@ -73,12 +73,17 @@ fn add_docker(
     }
     let cfg = GlobalConfig::load()?;
     let mut port_reg = PortRegistry::load()?;
-    let assigned =
-        port_core::assign_ports(project, &[("app".into(), 0)], &mut port_reg, cfg.ports.base_port);
+    let assigned = port_core::assign_ports(
+        project,
+        &[("app".into(), 0)],
+        &mut port_reg,
+        cfg.ports.base_port,
+    );
     let app_port = *assigned.get("app").unwrap();
     port_reg.save()?;
 
-    let dockerfile = "FROM alpine:3.20\nWORKDIR /app\nCOPY . .\nCMD [\"sh\",\"-c\",\"sleep infinity\"]\n";
+    let dockerfile =
+        "FROM alpine:3.20\nWORKDIR /app\nCOPY . .\nCMD [\"sh\",\"-c\",\"sleep infinity\"]\n";
     let compose = format!(
         "services:\n  app:\n    build: .\n    container_name: {project}-app\n    ports:\n      - \"{app_port}:8080\"\n    restart: unless-stopped\n"
     );

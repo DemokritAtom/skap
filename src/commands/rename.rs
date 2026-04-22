@@ -46,8 +46,13 @@ pub async fn run(args: RenameArgs) -> Result<()> {
     }
 
     // Move the directory.
-    std::fs::rename(&old_path, &new_path)
-        .with_context(|| format!("failed to rename {} -> {}", old_path.display(), new_path.display()))?;
+    std::fs::rename(&old_path, &new_path).with_context(|| {
+        format!(
+            "failed to rename {} -> {}",
+            old_path.display(),
+            new_path.display()
+        )
+    })?;
     output::success("Ordner umbenannt");
 
     // Update registry: remove old, insert new with patched path.

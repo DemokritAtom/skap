@@ -62,7 +62,10 @@ fn fix_ports(
     }
 
     println!();
-    output::warn(&format!("Konflikte gefunden auf {} Port(s):", conflicts.len()));
+    output::warn(&format!(
+        "Konflikte gefunden auf {} Port(s):",
+        conflicts.len()
+    ));
     for c in &conflicts {
         println!("  · {}", c);
     }
@@ -162,7 +165,10 @@ fn fix_env(dir: &Path) -> Result<()> {
     let example_keys = parse_env_keys(&std::fs::read_to_string(&example)?);
     let mut real_text = std::fs::read_to_string(&real)?;
     let real_keys = parse_env_keys(&real_text);
-    let missing: Vec<&String> = example_keys.iter().filter(|k| !real_keys.contains(k)).collect();
+    let missing: Vec<&String> = example_keys
+        .iter()
+        .filter(|k| !real_keys.contains(k))
+        .collect();
     if missing.is_empty() {
         output::success(".env is up to date");
         return Ok(());
@@ -248,7 +254,11 @@ fn walkdir(root: &Path) -> Vec<std::fs::DirEntry> {
         if let Ok(rd) = std::fs::read_dir(&d) {
             for e in rd.flatten() {
                 let p = e.path();
-                if p.is_dir() && !p.ends_with(".git") && !p.ends_with("node_modules") && !p.ends_with("target") {
+                if p.is_dir()
+                    && !p.ends_with(".git")
+                    && !p.ends_with("node_modules")
+                    && !p.ends_with("target")
+                {
                     stack.push(p);
                 }
                 out.push(e);
@@ -261,7 +271,10 @@ fn walkdir(root: &Path) -> Vec<std::fs::DirEntry> {
 fn fix_deps(dir: &Path) -> Result<()> {
     if dir.join("package.json").exists() && !dir.join("node_modules").exists() {
         output::info("Running npm install…");
-        let _ = std::process::Command::new("npm").arg("install").current_dir(dir).status();
+        let _ = std::process::Command::new("npm")
+            .arg("install")
+            .current_dir(dir)
+            .status();
     }
     if dir.join("requirements.txt").exists() {
         output::info("Running pip install -r requirements.txt…");
@@ -272,11 +285,17 @@ fn fix_deps(dir: &Path) -> Result<()> {
     }
     if dir.join("Cargo.toml").exists() {
         output::info("Running cargo fetch…");
-        let _ = std::process::Command::new("cargo").arg("fetch").current_dir(dir).status();
+        let _ = std::process::Command::new("cargo")
+            .arg("fetch")
+            .current_dir(dir)
+            .status();
     }
     if dir.join("go.mod").exists() {
         output::info("Running go mod tidy…");
-        let _ = std::process::Command::new("go").args(["mod", "tidy"]).current_dir(dir).status();
+        let _ = std::process::Command::new("go")
+            .args(["mod", "tidy"])
+            .current_dir(dir)
+            .status();
     }
     output::success("deps updated");
     Ok(())

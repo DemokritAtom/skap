@@ -98,7 +98,9 @@ pub async fn run(args: CloneArgs) -> Result<()> {
     registry.insert(derived_name.clone(), entry);
     registry.save()?;
     port_reg.save()?;
-    output::success(&format!("Registriert: {derived_name} (template: {template})"));
+    output::success(&format!(
+        "Registriert: {derived_name} (template: {template})"
+    ));
     output::info(&format!("Starten mit: creo start {derived_name}"));
     Ok(())
 }

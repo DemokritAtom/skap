@@ -78,8 +78,8 @@ impl GlobalConfig {
         }
         let raw = std::fs::read_to_string(&path)
             .with_context(|| format!("failed to read {}", path.display()))?;
-        let cfg: Self = toml::from_str(&raw)
-            .with_context(|| format!("failed to parse {}", path.display()))?;
+        let cfg: Self =
+            toml::from_str(&raw).with_context(|| format!("failed to parse {}", path.display()))?;
         Ok(cfg)
     }
 
@@ -106,8 +106,9 @@ impl GlobalConfig {
             "gitlab_url" => self.defaults.gitlab_url = value.into(),
             "emoji" => self.defaults.emoji = parse_bool(value)?,
             "base_port" | "ports.base_port" => {
-                self.ports.base_port =
-                    value.parse().with_context(|| format!("invalid port: {value}"))?;
+                self.ports.base_port = value
+                    .parse()
+                    .with_context(|| format!("invalid port: {value}"))?;
             }
             other => anyhow::bail!("unknown config key: {other}"),
         }

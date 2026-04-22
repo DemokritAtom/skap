@@ -34,9 +34,7 @@ pub async fn run(args: RunArgs) -> Result<()> {
     // Fall back to host execution. Be loud about it when docker was
     // expected but unavailable so the user isn't surprised.
     if entry.docker {
-        output::warn(
-            "Container läuft nicht – führe Befehl direkt im Projektverzeichnis aus.",
-        );
+        output::warn("Container läuft nicht – führe Befehl direkt im Projektverzeichnis aus.");
     }
     let status = std::process::Command::new(&args.cmd[0])
         .args(&args.cmd[1..])

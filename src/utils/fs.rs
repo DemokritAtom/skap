@@ -15,8 +15,7 @@ pub fn write_atomic(path: &Path, contents: &str) -> Result<()> {
         Some(ext) => format!("{}.tmp", ext.to_string_lossy()),
         None => "tmp".to_string(),
     });
-    std::fs::write(&tmp, contents)
-        .with_context(|| format!("failed to write {}", tmp.display()))?;
+    std::fs::write(&tmp, contents).with_context(|| format!("failed to write {}", tmp.display()))?;
     std::fs::rename(&tmp, path)
         .with_context(|| format!("failed to rename {} -> {}", tmp.display(), path.display()))?;
     Ok(())

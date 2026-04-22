@@ -85,7 +85,9 @@ fn git_branch(path: &std::path::Path) -> Option<String> {
 }
 
 fn git_is_dirty(path: &std::path::Path) -> bool {
-    let Ok(repo) = git2::Repository::open(path) else { return false };
+    let Ok(repo) = git2::Repository::open(path) else {
+        return false;
+    };
     let mut opts = git2::StatusOptions::new();
     opts.include_untracked(true);
     let statuses = match repo.statuses(Some(&mut opts)) {
@@ -97,7 +99,9 @@ fn git_is_dirty(path: &std::path::Path) -> bool {
 
 fn dir_size(path: &std::path::Path) -> Option<u64> {
     fn walk(p: &std::path::Path) -> u64 {
-        let Ok(rd) = std::fs::read_dir(p) else { return 0 };
+        let Ok(rd) = std::fs::read_dir(p) else {
+            return 0;
+        };
         let mut total = 0u64;
         for entry in rd.flatten() {
             let meta = match entry.metadata() {
