@@ -1,0 +1,31 @@
+# {{ project_name }}
+
+Go 1.22 command-line tool scaffolded with [creo](https://github.com/creo-cli/creo).
+Uses [cobra](https://github.com/spf13/cobra) for subcommands.
+
+## Build & run
+
+```bash
+go run . hello
+go run . hello Alice
+go build -o bin/{{ project_name_snake }}
+./bin/{{ project_name_snake }} hello
+```
+
+## Useful commands
+
+```bash
+creo run {{ project_name }} go test ./...
+creo run {{ project_name }} go vet ./...
+```
+
+## Layout
+
+```
+go.mod          – module + cobra dependency
+main.go         – cobra-based CLI with one example subcommand
+```
+
+---
+
+© {{ year }} {{ author }} · {{ license }}

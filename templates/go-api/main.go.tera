@@ -1,0 +1,37 @@
+package main
+
+import (
+	"encoding/json"
+	"log"
+	"net/http"
+	"os"
+)
+
+func main() {
+	mux := http.NewServeMux()
+	mux.HandleFunc("/health", health)
+	mux.HandleFunc("/api/hello", hello)
+
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "{{ api_port }}"
+	}
+	addr := "0.0.0.0:" + port
+	log.Printf("{{ project_name }} listening on http://%s", addr)
+	if err := http.ListenAndServe(addr, mux); err != nil {
+		log.Fatal(err)
+	}
+}
+
+func health(w http.ResponseWriter, _ *http.Request) {
+	writeJSON(w, map[string]any{"ok": true, "service": "{{ project_name }}"})
+}
+
+func hello(w http.ResponseWriter, _ *http.Request) {
+	writeJSON(w, map[string]any{"message": "Hello from {{ project_name }}"})
+}
+
+func writeJSON(w http.ResponseWriter, body any) {
+	w.Header().Set("Content-Type", "application/json")
+	_ = json.NewEncoder(w).Encode(body)
+}

@@ -1,0 +1,8 @@
+services:
+  api:
+    build: .
+    container_name: {{ project_name }}-api
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "{{ api_port }}:{{ api_port }}"

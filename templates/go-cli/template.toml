@@ -1,0 +1,5 @@
+[template]
+name = "go-cli"
+description = "Go 1.22 CLI built on cobra"
+language = "go"
+docker = false

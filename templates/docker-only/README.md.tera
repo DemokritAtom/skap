@@ -1,0 +1,31 @@
+# {{ project_name }}
+
+A generic Docker-only project scaffolded with [creo](https://github.com/creo-cli/creo).
+There is no language-specific runtime baked in – just an Alpine container exposing
+port `{{ app_port }}` that you can extend however you like.
+
+## Setup
+
+```bash
+cp .env.example .env       # adjust variables if needed
+creo start {{ project_name }}
+```
+
+## Useful commands
+
+```bash
+creo status {{ project_name }}     # is the container running?
+creo logs {{ project_name }}       # follow logs
+creo shell {{ project_name }}      # open an interactive shell
+creo stop {{ project_name }}       # stop containers
+```
+
+## Layout
+
+- `Dockerfile` – generic Alpine base, swap for whatever runtime you want
+- `docker-compose.yml` – single `app` service on port `{{ app_port }}`
+- `.env.example` – copy to `.env` for local secrets / config
+
+---
+
+© {{ year }} {{ author }} · {{ license }}

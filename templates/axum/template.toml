@@ -1,0 +1,10 @@
+[template]
+name = "axum"
+description = "Axum web service in Rust with tokio"
+language = "rust"
+docker = true
+
+[[services]]
+name = "api"
+port_offset = 0
+dockerfile = true

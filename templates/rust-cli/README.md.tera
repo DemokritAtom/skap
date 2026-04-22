@@ -1,0 +1,32 @@
+# {{ project_name }}
+
+Rust command-line tool scaffolded with [creo](https://github.com/creo-cli/creo).
+Uses `clap` 4 (derive), `anyhow` for ergonomic errors, and `colored` for output.
+
+## Build & run
+
+```bash
+cargo run -- hello
+cargo run -- hello Alice
+cargo build --release
+./target/release/{{ project_name_snake }} hello
+```
+
+## Useful commands
+
+```bash
+creo run {{ project_name }} cargo build
+creo run {{ project_name }} cargo test
+creo run {{ project_name }} cargo clippy
+```
+
+## Layout
+
+```
+Cargo.toml      – package manifest
+src/main.rs     – clap-based CLI with one example subcommand
+```
+
+---
+
+© {{ year }} {{ author }} · {{ license }}

@@ -1,0 +1,16 @@
+# Generic, minimal base image. Replace with whatever runtime your
+# project actually needs (node, python, rust, go, ...).
+FROM alpine:3.19
+
+WORKDIR /app
+
+# Install just enough to be useful for an interactive container.
+RUN apk add --no-cache bash curl ca-certificates tini
+
+COPY . .
+
+EXPOSE {{ app_port }}
+
+# Tini PID-1 keeps signals working cleanly.
+ENTRYPOINT ["/sbin/tini", "--"]
+CMD ["sh", "-c", "echo '{{ project_name }} container is up. Port {{ app_port }} is exposed.' && tail -f /dev/null"]

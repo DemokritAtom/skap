@@ -1,0 +1,41 @@
+# {{ project_name }}
+
+React + Vite frontend with an Express backend, scaffolded with [creo](https://github.com/creo-cli/creo).
+
+## Stack
+
+- **Frontend**: React 18, Vite 5, port `{{ frontend_port }}`
+- **Backend**: Express 4 on port `{{ backend_port }}`, `/api/*` proxied from the frontend
+- **Hot reload**: source bind-mounted into both containers
+
+## Setup
+
+```bash
+cp .env.example .env
+creo start {{ project_name }}
+```
+
+Then open <http://localhost:{{ frontend_port }}>.
+
+## Useful commands
+
+```bash
+creo logs {{ project_name }}                  # follow logs
+creo logs {{ project_name }} --service backend
+creo shell {{ project_name }} --service backend
+creo run  {{ project_name }} npm test
+creo stop {{ project_name }}
+```
+
+## Layout
+
+```
+src/main.jsx       – React entry point
+server/index.js    – Express API (/health, /api/hello)
+vite.config.js     – dev server + /api proxy to backend
+docker-compose.yml – frontend + backend services
+```
+
+---
+
+© {{ year }} {{ author }} · {{ license }}

@@ -1,0 +1,10 @@
+[template]
+name = "go-api"
+description = "Go 1.22 HTTP API with chi router"
+language = "go"
+docker = true
+
+[[services]]
+name = "api"
+port_offset = 0
+dockerfile = true

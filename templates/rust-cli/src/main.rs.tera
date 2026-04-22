@@ -1,0 +1,31 @@
+use anyhow::Result;
+use clap::{Parser, Subcommand};
+use colored::Colorize;
+
+/// {{ project_name }} – a CLI scaffolded with creo.
+#[derive(Debug, Parser)]
+#[command(name = "{{ project_name }}", version, about)]
+struct Cli {
+    #[command(subcommand)]
+    command: Command,
+}
+
+#[derive(Debug, Subcommand)]
+enum Command {
+    /// Print a friendly greeting.
+    Hello {
+        /// Who to greet.
+        #[arg(default_value = "world")]
+        name: String,
+    },
+}
+
+fn main() -> Result<()> {
+    let cli = Cli::parse();
+    match cli.command {
+        Command::Hello { name } => {
+            println!("{} {}!", "Hello,".green().bold(), name.cyan());
+        }
+    }
+    Ok(())
+}

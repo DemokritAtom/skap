@@ -1,0 +1,12 @@
+# syntax=docker/dockerfile:1.7
+
+FROM node:20-alpine AS deps
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+
+FROM deps AS dev
+EXPOSE {{ api_port }}
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+  CMD wget -qO- http://127.0.0.1:{{ api_port }}/health || exit 1
+CMD ["npm", "run", "dev"]

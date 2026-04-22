@@ -1,0 +1,10 @@
+[template]
+name = "next"
+description = "Next.js 14 (App Router) with TypeScript"
+language = "typescript"
+docker = true
+
+[[services]]
+name = "app"
+port_offset = 0
+dockerfile = true

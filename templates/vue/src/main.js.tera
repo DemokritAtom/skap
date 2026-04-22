@@ -1,0 +1,13 @@
+import { createApp, h } from 'vue'
+
+const App = {
+  render() {
+    return h('main', { class: 'app' }, [
+      h('h1', '{{ project_name_pascal }}'),
+      h('p', 'Vue 3 + Vite project bootstrapped with creo.'),
+      h('p', `API base URL: ${import.meta.env.VITE_API_URL}`)
+    ])
+  }
+}
+
+createApp(App).mount('#app')

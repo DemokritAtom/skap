@@ -1,0 +1,10 @@
+[template]
+name = "fastapi"
+description = "FastAPI on Python 3.12 with uvicorn"
+language = "python"
+docker = true
+
+[[services]]
+name = "api"
+port_offset = 0
+dockerfile = true

@@ -1,0 +1,31 @@
+# {{ project_name }}
+
+Axum (Rust + tokio) HTTP service scaffolded with [creo](https://github.com/creo-cli/creo).
+Listens on port `{{ api_port }}` behind a slim Debian runtime image.
+
+## Setup
+
+```bash
+cp .env.example .env
+creo start {{ project_name }}
+```
+
+## Endpoints
+
+| Route | Description |
+|---|---|
+| `GET /health` | Liveness probe (used by Docker healthcheck) |
+| `GET /api/hello` | Sample JSON endpoint |
+
+## Useful commands
+
+```bash
+creo logs  {{ project_name }}
+creo shell {{ project_name }}
+creo run   {{ project_name }} cargo test
+creo stop  {{ project_name }}
+```
+
+---
+
+© {{ year }} {{ author }} · {{ license }}

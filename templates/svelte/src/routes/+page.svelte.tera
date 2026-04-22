@@ -1,0 +1,9 @@
+<script>
+  import { env } from '$env/dynamic/public'
+</script>
+
+<main class="app">
+  <h1>{{ project_name_pascal }}</h1>
+  <p>SvelteKit project bootstrapped with creo.</p>
+  <p>API base URL: <code>{env.PUBLIC_API_URL}</code></p>
+</main>

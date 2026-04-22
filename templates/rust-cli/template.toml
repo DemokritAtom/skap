@@ -1,0 +1,5 @@
+[template]
+name = "rust-cli"
+description = "Rust CLI built on clap 4"
+language = "rust"
+docker = false

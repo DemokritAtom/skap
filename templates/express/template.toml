@@ -1,0 +1,10 @@
+[template]
+name = "express"
+description = "Express 4 API with TypeScript"
+language = "typescript"
+docker = true
+
+[[services]]
+name = "api"
+port_offset = 0
+dockerfile = true

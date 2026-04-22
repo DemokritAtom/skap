@@ -1,0 +1,26 @@
+# {{ project_name }}
+
+SvelteKit + TypeScript project scaffolded with [creo](https://github.com/creo-cli/creo).
+Runs on port `{{ app_port }}` with hot reload.
+
+## Setup
+
+```bash
+cp .env.example .env
+creo start {{ project_name }}
+```
+
+Then open <http://localhost:{{ app_port }}>.
+
+## Useful commands
+
+```bash
+creo logs  {{ project_name }}
+creo shell {{ project_name }}
+creo run   {{ project_name }} npm run check
+creo stop  {{ project_name }}
+```
+
+---
+
+© {{ year }} {{ author }} · {{ license }}

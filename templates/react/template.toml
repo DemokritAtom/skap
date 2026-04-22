@@ -1,0 +1,15 @@
+[template]
+name = "react"
+description = "React + Vite frontend with an Express backend"
+language = "javascript"
+docker = true
+
+[[services]]
+name = "frontend"
+port_offset = 0
+dockerfile = true
+
+[[services]]
+name = "backend"
+port_offset = 1000
+dockerfile = true

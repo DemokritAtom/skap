@@ -1,0 +1,15 @@
+"""FastAPI entrypoint for {{ project_name }}."""
+
+from fastapi import FastAPI
+
+app = FastAPI(title="{{ project_name_pascal }}", version="0.1.0")
+
+
+@app.get("/health")
+def health() -> dict:
+    return {"ok": True, "service": "{{ project_name }}"}
+
+
+@app.get("/api/hello")
+def hello() -> dict:
+    return {"message": "Hello from {{ project_name }}"}

@@ -1,0 +1,10 @@
+[template]
+name = "django"
+description = "Django 5 + gunicorn on Python 3.12"
+language = "python"
+docker = true
+
+[[services]]
+name = "web"
+port_offset = 0
+dockerfile = true

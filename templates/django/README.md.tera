@@ -1,0 +1,46 @@
+# {{ project_name }}
+
+Django 5 + gunicorn project (Python 3.12) scaffolded with [creo](https://github.com/creo-cli/creo).
+Listens on port `{{ web_port }}`. Migrations run automatically on container start.
+
+## Setup
+
+```bash
+cp .env.example .env
+creo start {{ project_name }}
+```
+
+Open <http://localhost:{{ web_port }}/> for the homepage routes
+or <http://localhost:{{ web_port }}/admin/> for the Django admin
+(create a superuser first: `creo run {{ project_name }} python manage.py createsuperuser`).
+
+## Endpoints
+
+| Route | Description |
+|---|---|
+| `GET /health/` | Liveness probe (used by Docker healthcheck) |
+| `GET /api/hello/` | Sample JSON endpoint |
+| `/admin/` | Django admin |
+
+## Useful commands
+
+```bash
+creo logs  {{ project_name }}
+creo shell {{ project_name }}
+creo run   {{ project_name }} python manage.py migrate
+creo run   {{ project_name }} python manage.py createsuperuser
+creo stop  {{ project_name }}
+```
+
+## Layout
+
+```
+manage.py            – Django CLI entrypoint
+config/settings.py   – settings (env-driven)
+config/urls.py       – URL routes
+config/wsgi.py       – gunicorn entrypoint
+```
+
+---
+
+© {{ year }} {{ author }} · {{ license }}

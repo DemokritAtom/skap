@@ -1,0 +1,19 @@
+# syntax=docker/dockerfile:1.7
+
+# ---------- shared deps stage ----------
+FROM node:20-alpine AS deps
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+
+# ---------- frontend (Vite dev server, bind-mounted in compose) ----------
+FROM deps AS frontend
+EXPOSE {{ frontend_port }}
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0", "--port", "{{ frontend_port }}"]
+
+# ---------- backend (Express) ----------
+FROM deps AS backend
+EXPOSE {{ backend_port }}
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+  CMD wget -qO- http://127.0.0.1:{{ backend_port }}/health || exit 1
+CMD ["node", "server/index.js"]

@@ -1,0 +1,35 @@
+package main
+
+import (
+	"fmt"
+	"os"
+
+	"github.com/spf13/cobra"
+)
+
+func main() {
+	root := &cobra.Command{
+		Use:   "{{ project_name }}",
+		Short: "{{ project_name }} – CLI scaffolded with creo",
+	}
+
+	hello := &cobra.Command{
+		Use:   "hello [name]",
+		Short: "Print a friendly greeting",
+		Args:  cobra.MaximumNArgs(1),
+		Run: func(_ *cobra.Command, args []string) {
+			name := "world"
+			if len(args) == 1 {
+				name = args[0]
+			}
+			fmt.Printf("Hello, %s!\n", name)
+		},
+	}
+
+	root.AddCommand(hello)
+
+	if err := root.Execute(); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+}

@@ -1,0 +1,3 @@
+module {{ project_name_snake }}
+
+go 1.22

@@ -1,0 +1,10 @@
+[template]
+name = "svelte"
+description = "SvelteKit + TypeScript"
+language = "typescript"
+docker = true
+
+[[services]]
+name = "app"
+port_offset = 0
+dockerfile = true

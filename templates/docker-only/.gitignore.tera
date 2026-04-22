@@ -1,0 +1,9 @@
+# Editor / OS junk
+.DS_Store
+.vscode/
+.idea/
+
+# Local env
+.env
+.env.local
+*.log

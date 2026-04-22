@@ -1,0 +1,18 @@
+import express from 'express'
+
+const app = express()
+const port = Number(process.env.PORT) || {{ api_port }}
+
+app.use(express.json())
+
+app.get('/health', (_req, res) => {
+  res.json({ ok: true, service: '{{ project_name }}' })
+})
+
+app.get('/api/hello', (_req, res) => {
+  res.json({ message: 'Hello from {{ project_name }}' })
+})
+
+app.listen(port, '0.0.0.0', () => {
+  console.log(`{{ project_name }} listening on :${port}`)
+})

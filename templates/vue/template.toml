@@ -1,0 +1,10 @@
+[template]
+name = "vue"
+description = "Vue 3 + Vite + TypeScript"
+language = "typescript"
+docker = true
+
+[[services]]
+name = "frontend"
+port_offset = 0
+dockerfile = true

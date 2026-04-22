@@ -1,0 +1,33 @@
+# {{ project_name }}
+
+FastAPI service on Python 3.12, scaffolded with [creo](https://github.com/creo-cli/creo).
+Listens on port `{{ api_port }}` with uvicorn `--reload`.
+
+## Setup
+
+```bash
+cp .env.example .env
+creo start {{ project_name }}
+```
+
+Open <http://localhost:{{ api_port }}/docs> for the auto-generated Swagger UI.
+
+## Endpoints
+
+| Route | Description |
+|---|---|
+| `GET /health` | Liveness probe (used by Docker healthcheck) |
+| `GET /api/hello` | Sample endpoint |
+
+## Useful commands
+
+```bash
+creo logs  {{ project_name }}
+creo shell {{ project_name }}
+creo run   {{ project_name }} pytest
+creo stop  {{ project_name }}
+```
+
+---
+
+© {{ year }} {{ author }} · {{ license }}

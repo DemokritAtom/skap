@@ -1,0 +1,10 @@
+[template]
+name = "docker-only"
+description = "Generic Docker project – just a base image you can build on"
+language = "any"
+docker = true
+
+[[services]]
+name = "app"
+port_offset = 0
+dockerfile = true

@@ -1,0 +1,157 @@
+//! Auto-generated arrays embedding every built-in template into the binary.
+//!
+//! Each constant is `[(relative_path, contents)]`.
+
+#![allow(dead_code)]
+
+pub const DOCKER_ONLY: &[(&str, &str)] = &[
+    (".dockerignore.tera", include_str!("../../templates/docker-only/.dockerignore.tera")),
+    (".env.example.tera", include_str!("../../templates/docker-only/.env.example.tera")),
+    (".gitignore.tera", include_str!("../../templates/docker-only/.gitignore.tera")),
+    ("Dockerfile.tera", include_str!("../../templates/docker-only/Dockerfile.tera")),
+    ("README.md.tera", include_str!("../../templates/docker-only/README.md.tera")),
+    ("docker-compose.yml.tera", include_str!("../../templates/docker-only/docker-compose.yml.tera")),
+    ("template.toml", include_str!("../../templates/docker-only/template.toml")),
+];
+
+pub const REACT: &[(&str, &str)] = &[
+    (".dockerignore.tera", include_str!("../../templates/react/.dockerignore.tera")),
+    (".env.example.tera", include_str!("../../templates/react/.env.example.tera")),
+    (".gitignore.tera", include_str!("../../templates/react/.gitignore.tera")),
+    ("Dockerfile.tera", include_str!("../../templates/react/Dockerfile.tera")),
+    ("README.md.tera", include_str!("../../templates/react/README.md.tera")),
+    ("docker-compose.yml.tera", include_str!("../../templates/react/docker-compose.yml.tera")),
+    ("index.html.tera", include_str!("../../templates/react/index.html.tera")),
+    ("package.json.tera", include_str!("../../templates/react/package.json.tera")),
+    ("server/index.js.tera", include_str!("../../templates/react/server/index.js.tera")),
+    ("src/main.jsx.tera", include_str!("../../templates/react/src/main.jsx.tera")),
+    ("template.toml", include_str!("../../templates/react/template.toml")),
+    ("vite.config.js.tera", include_str!("../../templates/react/vite.config.js.tera")),
+];
+
+pub const NEXT: &[(&str, &str)] = &[
+    (".dockerignore.tera", include_str!("../../templates/next/.dockerignore.tera")),
+    (".env.example.tera", include_str!("../../templates/next/.env.example.tera")),
+    (".gitignore.tera", include_str!("../../templates/next/.gitignore.tera")),
+    ("Dockerfile.tera", include_str!("../../templates/next/Dockerfile.tera")),
+    ("README.md.tera", include_str!("../../templates/next/README.md.tera")),
+    ("app/layout.tsx.tera", include_str!("../../templates/next/app/layout.tsx.tera")),
+    ("app/page.tsx.tera", include_str!("../../templates/next/app/page.tsx.tera")),
+    ("docker-compose.yml.tera", include_str!("../../templates/next/docker-compose.yml.tera")),
+    ("next.config.mjs.tera", include_str!("../../templates/next/next.config.mjs.tera")),
+    ("package.json.tera", include_str!("../../templates/next/package.json.tera")),
+    ("template.toml", include_str!("../../templates/next/template.toml")),
+    ("tsconfig.json.tera", include_str!("../../templates/next/tsconfig.json.tera")),
+];
+
+pub const VUE: &[(&str, &str)] = &[
+    (".dockerignore.tera", include_str!("../../templates/vue/.dockerignore.tera")),
+    (".env.example.tera", include_str!("../../templates/vue/.env.example.tera")),
+    (".gitignore.tera", include_str!("../../templates/vue/.gitignore.tera")),
+    ("Dockerfile.tera", include_str!("../../templates/vue/Dockerfile.tera")),
+    ("README.md.tera", include_str!("../../templates/vue/README.md.tera")),
+    ("docker-compose.yml.tera", include_str!("../../templates/vue/docker-compose.yml.tera")),
+    ("index.html.tera", include_str!("../../templates/vue/index.html.tera")),
+    ("package.json.tera", include_str!("../../templates/vue/package.json.tera")),
+    ("src/main.js.tera", include_str!("../../templates/vue/src/main.js.tera")),
+    ("template.toml", include_str!("../../templates/vue/template.toml")),
+    ("vite.config.js.tera", include_str!("../../templates/vue/vite.config.js.tera")),
+];
+
+pub const SVELTE: &[(&str, &str)] = &[
+    (".dockerignore.tera", include_str!("../../templates/svelte/.dockerignore.tera")),
+    (".env.example.tera", include_str!("../../templates/svelte/.env.example.tera")),
+    (".gitignore.tera", include_str!("../../templates/svelte/.gitignore.tera")),
+    ("Dockerfile.tera", include_str!("../../templates/svelte/Dockerfile.tera")),
+    ("README.md.tera", include_str!("../../templates/svelte/README.md.tera")),
+    ("docker-compose.yml.tera", include_str!("../../templates/svelte/docker-compose.yml.tera")),
+    ("package.json.tera", include_str!("../../templates/svelte/package.json.tera")),
+    ("src/app.html.tera", include_str!("../../templates/svelte/src/app.html.tera")),
+    ("src/routes/+page.svelte.tera", include_str!("../../templates/svelte/src/routes/+page.svelte.tera")),
+    ("svelte.config.js.tera", include_str!("../../templates/svelte/svelte.config.js.tera")),
+    ("template.toml", include_str!("../../templates/svelte/template.toml")),
+    ("vite.config.js.tera", include_str!("../../templates/svelte/vite.config.js.tera")),
+];
+
+pub const EXPRESS: &[(&str, &str)] = &[
+    (".dockerignore.tera", include_str!("../../templates/express/.dockerignore.tera")),
+    (".env.example.tera", include_str!("../../templates/express/.env.example.tera")),
+    (".gitignore.tera", include_str!("../../templates/express/.gitignore.tera")),
+    ("Dockerfile.tera", include_str!("../../templates/express/Dockerfile.tera")),
+    ("README.md.tera", include_str!("../../templates/express/README.md.tera")),
+    ("docker-compose.yml.tera", include_str!("../../templates/express/docker-compose.yml.tera")),
+    ("package.json.tera", include_str!("../../templates/express/package.json.tera")),
+    ("src/index.ts.tera", include_str!("../../templates/express/src/index.ts.tera")),
+    ("template.toml", include_str!("../../templates/express/template.toml")),
+    ("tsconfig.json.tera", include_str!("../../templates/express/tsconfig.json.tera")),
+];
+
+pub const FASTAPI: &[(&str, &str)] = &[
+    (".dockerignore.tera", include_str!("../../templates/fastapi/.dockerignore.tera")),
+    (".env.example.tera", include_str!("../../templates/fastapi/.env.example.tera")),
+    (".gitignore.tera", include_str!("../../templates/fastapi/.gitignore.tera")),
+    ("Dockerfile.tera", include_str!("../../templates/fastapi/Dockerfile.tera")),
+    ("README.md.tera", include_str!("../../templates/fastapi/README.md.tera")),
+    ("app/__init__.py.tera", include_str!("../../templates/fastapi/app/__init__.py.tera")),
+    ("app/main.py.tera", include_str!("../../templates/fastapi/app/main.py.tera")),
+    ("docker-compose.yml.tera", include_str!("../../templates/fastapi/docker-compose.yml.tera")),
+    ("requirements.txt.tera", include_str!("../../templates/fastapi/requirements.txt.tera")),
+    ("template.toml", include_str!("../../templates/fastapi/template.toml")),
+];
+
+pub const DJANGO: &[(&str, &str)] = &[
+    (".dockerignore.tera", include_str!("../../templates/django/.dockerignore.tera")),
+    (".env.example.tera", include_str!("../../templates/django/.env.example.tera")),
+    (".gitignore.tera", include_str!("../../templates/django/.gitignore.tera")),
+    ("Dockerfile.tera", include_str!("../../templates/django/Dockerfile.tera")),
+    ("README.md.tera", include_str!("../../templates/django/README.md.tera")),
+    ("config/__init__.py.tera", include_str!("../../templates/django/config/__init__.py.tera")),
+    ("config/settings.py.tera", include_str!("../../templates/django/config/settings.py.tera")),
+    ("config/urls.py.tera", include_str!("../../templates/django/config/urls.py.tera")),
+    ("config/wsgi.py.tera", include_str!("../../templates/django/config/wsgi.py.tera")),
+    ("docker-compose.yml.tera", include_str!("../../templates/django/docker-compose.yml.tera")),
+    ("manage.py.tera", include_str!("../../templates/django/manage.py.tera")),
+    ("requirements.txt.tera", include_str!("../../templates/django/requirements.txt.tera")),
+    ("template.toml", include_str!("../../templates/django/template.toml")),
+];
+
+pub const AXUM: &[(&str, &str)] = &[
+    (".dockerignore.tera", include_str!("../../templates/axum/.dockerignore.tera")),
+    (".env.example.tera", include_str!("../../templates/axum/.env.example.tera")),
+    (".gitignore.tera", include_str!("../../templates/axum/.gitignore.tera")),
+    ("Cargo.toml.tera", include_str!("../../templates/axum/Cargo.toml.tera")),
+    ("Dockerfile.tera", include_str!("../../templates/axum/Dockerfile.tera")),
+    ("README.md.tera", include_str!("../../templates/axum/README.md.tera")),
+    ("docker-compose.yml.tera", include_str!("../../templates/axum/docker-compose.yml.tera")),
+    ("src/main.rs.tera", include_str!("../../templates/axum/src/main.rs.tera")),
+    ("template.toml", include_str!("../../templates/axum/template.toml")),
+];
+
+pub const GO_API: &[(&str, &str)] = &[
+    (".dockerignore.tera", include_str!("../../templates/go-api/.dockerignore.tera")),
+    (".env.example.tera", include_str!("../../templates/go-api/.env.example.tera")),
+    (".gitignore.tera", include_str!("../../templates/go-api/.gitignore.tera")),
+    ("Dockerfile.tera", include_str!("../../templates/go-api/Dockerfile.tera")),
+    ("README.md.tera", include_str!("../../templates/go-api/README.md.tera")),
+    ("docker-compose.yml.tera", include_str!("../../templates/go-api/docker-compose.yml.tera")),
+    ("go.mod.tera", include_str!("../../templates/go-api/go.mod.tera")),
+    ("main.go.tera", include_str!("../../templates/go-api/main.go.tera")),
+    ("template.toml", include_str!("../../templates/go-api/template.toml")),
+];
+
+pub const RUST_CLI: &[(&str, &str)] = &[
+    (".gitignore.tera", include_str!("../../templates/rust-cli/.gitignore.tera")),
+    ("Cargo.toml.tera", include_str!("../../templates/rust-cli/Cargo.toml.tera")),
+    ("README.md.tera", include_str!("../../templates/rust-cli/README.md.tera")),
+    ("src/main.rs.tera", include_str!("../../templates/rust-cli/src/main.rs.tera")),
+    ("template.toml", include_str!("../../templates/rust-cli/template.toml")),
+];
+
+pub const GO_CLI: &[(&str, &str)] = &[
+    (".gitignore.tera", include_str!("../../templates/go-cli/.gitignore.tera")),
+    ("README.md.tera", include_str!("../../templates/go-cli/README.md.tera")),
+    ("go.mod.tera", include_str!("../../templates/go-cli/go.mod.tera")),
+    ("main.go.tera", include_str!("../../templates/go-cli/main.go.tera")),
+    ("template.toml", include_str!("../../templates/go-cli/template.toml")),
+];
+

@@ -1,0 +1,32 @@
+# syntax=docker/dockerfile:1.7
+
+# ---------- builder ----------
+FROM rust:1.79-slim AS builder
+WORKDIR /app
+
+# Cache deps separately for faster rebuilds.
+COPY Cargo.toml Cargo.lock* ./
+RUN mkdir src && echo 'fn main() {}' > src/main.rs && \
+    cargo build --release && \
+    rm -rf src target/release/deps/{{ project_name_snake }}*
+
+COPY . .
+RUN cargo build --release
+
+# ---------- runtime ----------
+FROM debian:bookworm-slim AS runtime
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      ca-certificates curl tini \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+COPY --from=builder /app/target/release/{{ project_name_snake }} /usr/local/bin/{{ project_name_snake }}
+
+EXPOSE {{ api_port }}
+ENV PORT={{ api_port }}
+
+HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
+  CMD curl -fsS http://127.0.0.1:{{ api_port }}/health || exit 1
+
+ENTRYPOINT ["/usr/bin/tini", "--"]
+CMD ["{{ project_name_snake }}"]

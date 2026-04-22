@@ -1,0 +1,10 @@
+services:
+  app:
+    build: .
+    container_name: {{ project_name }}-app
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "{{ app_port }}:{{ app_port }}"
+    volumes:
+      - ./:/app

@@ -1,0 +1,14 @@
+services:
+  api:
+    build: .
+    container_name: {{ project_name }}-api
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "{{ api_port }}:{{ api_port }}"
+    volumes:
+      - ./:/app
+      - api_node_modules:/app/node_modules
+
+volumes:
+  api_node_modules:

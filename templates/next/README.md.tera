@@ -1,0 +1,38 @@
+# {{ project_name }}
+
+Next.js 14 (App Router, TypeScript) project scaffolded with [creo](https://github.com/creo-cli/creo).
+
+- Runs on port `{{ app_port }}`
+- Multi-stage Dockerfile (deps → builder → runner) for slim production images
+- Hot reload via bind-mounted source
+
+## Setup
+
+```bash
+cp .env.example .env
+creo start {{ project_name }}
+```
+
+Then open <http://localhost:{{ app_port }}>.
+
+## Useful commands
+
+```bash
+creo logs  {{ project_name }}
+creo shell {{ project_name }}
+creo run   {{ project_name }} npm run lint
+creo stop  {{ project_name }}
+```
+
+## Layout
+
+```
+app/layout.tsx   – root layout
+app/page.tsx     – home page
+next.config.mjs  – Next config
+tsconfig.json    – TypeScript config
+```
+
+---
+
+© {{ year }} {{ author }} · {{ license }}

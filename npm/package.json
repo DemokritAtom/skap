@@ -1,0 +1,29 @@
+{
+  "name": "creo",
+  "version": "0.1.0",
+  "description": "A lean, fast Linux/macOS CLI for managing dev projects",
+  "bin": {
+    "creo": "bin/creo"
+  },
+  "scripts": {
+    "postinstall": "node install.js"
+  },
+  "files": [
+    "install.js",
+    "bin/",
+    "README.md",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/creo-cli/creo.git"
+  },
+  "homepage": "https://github.com/creo-cli/creo#readme",
+  "license": "MIT",
+  "keywords": ["cli", "scaffold", "docker", "dev", "project"],
+  "engines": {
+    "node": ">=14"
+  },
+  "os": ["linux", "darwin"],
+  "cpu": ["x64", "arm64"]
+}

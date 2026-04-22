@@ -1,0 +1,2 @@
+# Common files shared across templates (currently unused; the actual
+# .gitignore and README content lives per-template for full control).

@@ -1,0 +1,15 @@
+bin/
+dist/
+*.exe
+*.test
+*.out
+
+vendor/
+
+.env
+.env.local
+*.log
+
+.DS_Store
+.vscode/
+.idea/

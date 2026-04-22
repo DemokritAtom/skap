@@ -1,0 +1,14 @@
+services:
+  web:
+    build: .
+    container_name: {{ project_name }}-web
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "{{ web_port }}:{{ web_port }}"
+    volumes:
+      - ./:/app
+      - web_static:/app/staticfiles
+
+volumes:
+  web_static:
