@@ -54,6 +54,8 @@ pub enum Command {
     Clean(CleanArgs),
     /// Archive a project (hide from `creo list`, stop containers).
     Archive(ProjectArgs),
+    /// Delete a project and all traces from registry and ports.
+    Delete(DeleteArgs),
     /// Read or modify global creo config.
     Config(ConfigArgs),
     /// Self-update creo from GitHub releases.
@@ -68,6 +70,18 @@ pub enum Command {
     Clone(CloneArgs),
     /// Manage tags on an existing project.
     Tag(TagArgs),
+}
+
+#[derive(Debug, clap::Args)]
+pub struct DeleteArgs {
+    /// Project name. If omitted, uses the project of the current directory.
+    pub project: Option<String>,
+    /// Delete without confirmation.
+    #[arg(long)]
+    pub yes: bool,
+    /// Only remove from registry, keep files.
+    #[arg(long)]
+    pub keep_files: bool,
 }
 
 // ---------------------------------------------------------------------------

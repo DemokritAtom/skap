@@ -30,6 +30,7 @@ pub mod status;
 pub mod stop;
 pub mod tag;
 pub mod update;
+pub mod delete;
 
 /// Dispatch the parsed CLI to the corresponding command implementation.
 pub async fn dispatch(cli: Cli) -> Result<()> {
@@ -49,6 +50,7 @@ pub async fn dispatch(cli: Cli) -> Result<()> {
         Command::Doctor => doctor::run().await,
         Command::Clean(args) => clean::run(args).await,
         Command::Archive(args) => archive::run(args).await,
+        Command::Delete(args) => delete::run(args).await,
         Command::Config(args) => config::run(args).await,
         Command::Update => update::run().await,
         Command::Rename(args) => rename::run(args).await,
