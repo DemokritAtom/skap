@@ -1,6 +1,6 @@
 # {{ project_name }}
 
-Next.js 14 (App Router, TypeScript) project scaffolded with [creo](https://github.com/creo-cli/creo).
+Next.js 14 (App Router, TypeScript) project scaffolded with [skap](https://github.com/skap-cli/skap).
 
 - Runs on port `{{ app_port }}`
 - Multi-stage Dockerfile (deps → builder → runner) for slim production images
@@ -10,7 +10,7 @@ Next.js 14 (App Router, TypeScript) project scaffolded with [creo](https://githu
 
 ```bash
 cp .env.example .env
-creo start {{ project_name }}
+skap start {{ project_name }}
 ```
 
 Then open <http://localhost:{{ app_port }}>.
@@ -18,10 +18,10 @@ Then open <http://localhost:{{ app_port }}>.
 ## Useful commands
 
 ```bash
-creo logs  {{ project_name }}
-creo shell {{ project_name }}
-creo run   {{ project_name }} npm run lint
-creo stop  {{ project_name }}
+skap logs  {{ project_name }}
+skap shell {{ project_name }}
+skap run   {{ project_name }} npm run lint
+skap stop  {{ project_name }}
 ```
 
 ## Layout

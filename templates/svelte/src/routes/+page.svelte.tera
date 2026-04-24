@@ -4,6 +4,6 @@
 
 <main class="app">
   <h1>{{ project_name_pascal }}</h1>
-  <p>SvelteKit project bootstrapped with creo.</p>
+  <p>SvelteKit project bootstrapped with skap.</p>
   <p>API base URL: <code>{env.PUBLIC_API_URL}</code></p>
 </main>

@@ -2,7 +2,7 @@ use anyhow::Result;
 use clap::{Parser, Subcommand};
 use colored::Colorize;
 
-/// {{ project_name }} – a CLI scaffolded with creo.
+/// {{ project_name }} – a CLI scaffolded with skap.
 #[derive(Debug, Parser)]
 #[command(name = "{{ project_name }}", version, about)]
 struct Cli {
