@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 /**
- * creo npm post-install hook.
+ * skap npm post-install hook.
  *
- * Downloads the matching pre-built `creo` binary from the GitHub release
- * for this package's version and places it at `bin/creo`. Falls back to a
+ * Downloads the matching pre-built `skap` binary from the GitHub release
+ * for this package's version and places it at `bin/skap`. Falls back to a
  * helpful error message if no asset matches the platform.
  */
 'use strict';
@@ -19,7 +19,7 @@ const zlib = require('zlib');
 const pump = promisify(pipeline);
 
 const VERSION = require('./package.json').version;
-const REPO = 'creo-cli/creo';
+const REPO = 'skap-cli/skap';
 
 function detectTarget() {
   const platform = os.platform();
@@ -33,7 +33,7 @@ function detectTarget() {
 
 function follow(url) {
   return new Promise((resolve, reject) => {
-    const req = https.get(url, { headers: { 'User-Agent': 'creo-npm-installer' } }, (res) => {
+    const req = https.get(url, { headers: { 'User-Agent': 'skap-npm-installer' } }, (res) => {
       if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
         resolve(follow(res.headers.location));
       } else if (res.statusCode !== 200) {
@@ -48,13 +48,13 @@ function follow(url) {
 
 async function main() {
   const target = detectTarget();
-  const asset = `creo-v${VERSION}-${target}.tar.gz`;
+  const asset = `skap-v${VERSION}-${target}.tar.gz`;
   const url = `https://github.com/${REPO}/releases/download/v${VERSION}/${asset}`;
   const binDir = path.join(__dirname, 'bin');
   fs.mkdirSync(binDir, { recursive: true });
-  const tmpFile = path.join(binDir, 'creo.tar.gz');
+  const tmpFile = path.join(binDir, 'skap.tar.gz');
 
-  console.log(`[creo] downloading ${url}`);
+  console.log(`[skap] downloading ${url}`);
   const res = await follow(url);
   await pump(res, fs.createWriteStream(tmpFile));
 
@@ -62,14 +62,14 @@ async function main() {
   // tar parser by shelling out to `tar`. macOS and every Linux distro
   // ship with it.
   const { execFileSync } = require('child_process');
-  execFileSync('tar', ['-xzf', tmpFile, '-C', binDir, 'creo'], { stdio: 'inherit' });
+  execFileSync('tar', ['-xzf', tmpFile, '-C', binDir, 'skap'], { stdio: 'inherit' });
   fs.unlinkSync(tmpFile);
-  fs.chmodSync(path.join(binDir, 'creo'), 0o755);
-  console.log('[creo] installed to', path.join(binDir, 'creo'));
+  fs.chmodSync(path.join(binDir, 'skap'), 0o755);
+  console.log('[skap] installed to', path.join(binDir, 'skap'));
 }
 
 main().catch((err) => {
-  console.error('[creo] post-install failed:', err.message);
-  console.error('[creo] you can install manually via: cargo install creo');
+  console.error('[skap] post-install failed:', err.message);
+  console.error('[skap] you can install manually via: cargo install skap');
   process.exit(0); // do not block npm install completely
 });

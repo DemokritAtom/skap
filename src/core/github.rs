@@ -27,7 +27,7 @@ pub async fn create_repo(token: &str, name: &str, private: bool) -> Result<Strin
     };
     let resp = reqwest::Client::new()
         .post("https://api.github.com/user/repos")
-        .header("User-Agent", "creo-cli")
+        .header("User-Agent", "skap-cli")
         .header("Accept", "application/vnd.github+json")
         .bearer_auth(token)
         .json(&body)

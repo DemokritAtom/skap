@@ -1,7 +1,7 @@
 //! Port-scanning and -assignment helpers.
 //!
 //! Two sources of "in use" ports are consulted:
-//!  * the persistent [`PortRegistry`] in `~/.config/creo/ports.toml`
+//!  * the persistent [`PortRegistry`] in `~/.config/skap/ports.toml`
 //!  * a live `TcpListener::bind` probe to detect ports occupied by other
 //!    processes right now.
 

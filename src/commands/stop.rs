@@ -1,4 +1,4 @@
-//! `creo stop` – stop a project's docker compose stack.
+//! `skap stop` – stop a project's docker compose stack.
 
 use anyhow::Result;
 

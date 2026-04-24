@@ -1,11 +1,11 @@
 #!/usr/bin/env sh
-# Shell installer for creo.
+# Shell installer for skap.
 #
-# Usage: curl -fsSL https://raw.githubusercontent.com/creo-cli/creo/main/install.sh | sh
+# Usage: curl -fsSL https://raw.githubusercontent.com/skap-cli/skap/main/install.sh | sh
 set -eu
 
-REPO="creo-cli/creo"
-INSTALL_DIR="${CREO_INSTALL_DIR:-$HOME/.local/bin}"
+REPO="skap-cli/skap"
+INSTALL_DIR="${SKAP_INSTALL_DIR:-$HOME/.local/bin}"
 
 OS="$(uname -s)"
 ARCH="$(uname -m)"
@@ -24,17 +24,17 @@ if [ -z "$VERSION" ]; then
   exit 1
 fi
 
-URL="https://github.com/${REPO}/releases/download/${VERSION}/creo-${VERSION}-${TARGET}.tar.gz"
+URL="https://github.com/${REPO}/releases/download/${VERSION}/skap-${VERSION}-${TARGET}.tar.gz"
 echo "downloading $URL"
 
 mkdir -p "$INSTALL_DIR"
 TMP="$(mktemp -d)"
 curl -fsSL "$URL" | tar -C "$TMP" -xzf -
-mv "$TMP/creo" "$INSTALL_DIR/creo"
-chmod +x "$INSTALL_DIR/creo"
+mv "$TMP/skap" "$INSTALL_DIR/skap"
+chmod +x "$INSTALL_DIR/skap"
 rm -rf "$TMP"
 
-echo "installed to $INSTALL_DIR/creo"
+echo "installed to $INSTALL_DIR/skap"
 case ":$PATH:" in
   *":$INSTALL_DIR:"*) ;;
   *) echo "Hint: add $INSTALL_DIR to your PATH" ;;

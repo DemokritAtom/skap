@@ -1,4 +1,4 @@
-//! `creo list` – list registered projects as a tabular summary.
+//! `skap list` – list registered projects as a tabular summary.
 
 use anyhow::Result;
 use colored::Colorize;
@@ -50,7 +50,7 @@ pub async fn run(args: ListArgs) -> Result<()> {
     if rows.is_empty() {
         println!(
             "{}",
-            "No projects registered yet. Try: creo new myapp".dimmed()
+            "No projects registered yet. Try: skap new myapp".dimmed()
         );
         return Ok(());
     }

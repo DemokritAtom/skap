@@ -1,4 +1,4 @@
-//! `creo status` – show details of a single project.
+//! `skap status` – show details of a single project.
 
 use anyhow::Result;
 use colored::Colorize;

@@ -3,7 +3,7 @@
 //! We shell out to the `docker` CLI rather than talking to the daemon
 //! directly. This keeps the binary small, avoids permission issues with
 //! `/var/run/docker.sock`, and matches what users expect when reading
-//! creo's output.
+//! skap's output.
 
 use std::path::Path;
 use std::process::{Command, Stdio};

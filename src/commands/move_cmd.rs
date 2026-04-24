@@ -1,4 +1,4 @@
-//! `creo move <project> <new-path>` – move a project to a different
+//! `skap move <project> <new-path>` – move a project to a different
 //! filesystem location and update the registry accordingly.
 
 use anyhow::{bail, Context, Result};
@@ -52,6 +52,6 @@ pub async fn run(args: MoveArgs) -> Result<()> {
     if was_running {
         let _ = docker::compose(&new_path, &["up", "-d"]);
     }
-    output::info(&format!("Starten mit: creo start {}", args.project));
+    output::info(&format!("Starten mit: skap start {}", args.project));
     Ok(())
 }

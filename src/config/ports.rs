@@ -1,6 +1,6 @@
-//! Port registry (`~/.config/creo/ports.toml`).
+//! Port registry (`~/.config/skap/ports.toml`).
 //!
-//! Tracks which ports creo has handed out so that subsequent
+//! Tracks which ports skap has handed out so that subsequent
 //! projects/services don't accidentally collide with each other.
 
 use std::collections::BTreeMap;

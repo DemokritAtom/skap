@@ -1,4 +1,4 @@
-//! `creo run <project> <cmd...>` – run a command in a project's context.
+//! `skap run <project> <cmd...>` – run a command in a project's context.
 //!
 //! If the project has a running compose stack with a single service, the
 //! command is executed inside that container via `docker compose exec`.

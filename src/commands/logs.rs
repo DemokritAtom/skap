@@ -1,4 +1,4 @@
-//! `creo logs` – stream container logs.
+//! `skap logs` – stream container logs.
 
 use anyhow::Result;
 

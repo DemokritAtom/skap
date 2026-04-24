@@ -1,4 +1,4 @@
-//! `creo archive` – mark a project as archived (hide & stop).
+//! `skap archive` – mark a project as archived (hide & stop).
 
 use anyhow::Result;
 

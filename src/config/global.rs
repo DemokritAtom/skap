@@ -1,4 +1,4 @@
-//! Global creo configuration (`~/.config/creo/config.toml`).
+//! Global skap configuration (`~/.config/skap/config.toml`).
 //!
 //! Lazily created on first read with sane defaults.
 
@@ -133,7 +133,7 @@ impl GlobalConfig {
         })
     }
 
-    /// All key/value pairs for `creo config list`.
+    /// All key/value pairs for `skap config list`.
     pub fn entries(&self) -> Vec<(&'static str, String)> {
         vec![
             ("editor", self.defaults.editor.clone()),

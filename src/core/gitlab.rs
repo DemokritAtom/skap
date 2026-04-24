@@ -25,7 +25,7 @@ pub async fn create_project(
     let url = format!("{}/api/v4/projects", base_url.trim_end_matches('/'));
     let resp = reqwest::Client::new()
         .post(&url)
-        .header("User-Agent", "creo-cli")
+        .header("User-Agent", "skap-cli")
         .header("PRIVATE-TOKEN", token)
         .json(&CreateProject { name, visibility })
         .send()

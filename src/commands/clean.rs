@@ -1,4 +1,4 @@
-//! `creo clean` – remove docker artifacts of a project.
+//! `skap clean` – remove docker artifacts of a project.
 
 use anyhow::Result;
 

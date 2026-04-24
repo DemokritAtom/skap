@@ -57,7 +57,7 @@ fn emoji_terminal_supported() -> bool {
 }
 
 /// Symbols for the docker compose status of a project. Returned as a
-/// colored, fixed-width string so columns line up in `creo list`.
+/// colored, fixed-width string so columns line up in `skap list`.
 pub fn status_symbol(s: crate::core::docker::Status) -> String {
     use crate::core::docker::Status::*;
     if emoji_enabled() {

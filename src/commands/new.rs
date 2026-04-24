@@ -1,4 +1,4 @@
-//! `creo new` – create a new project from a template.
+//! `skap new` – create a new project from a template.
 //!
 //! Workflow:
 //!  1. Resolve template (positional/flag, default `docker-only`).
@@ -10,7 +10,7 @@
 //!  6. Optionally create a license file.
 //!  7. Register the project in the registry.
 //!  8. Optionally create a remote on the configured git provider
-//!     (todo: handled in step 11 / `creo add github` for now).
+//!     (todo: handled in step 11 / `skap add github` for now).
 //!  9. Print a clean summary.
 
 use std::collections::BTreeMap;
@@ -23,7 +23,7 @@ use crate::cli::NewArgs;
 use crate::config::global::GlobalConfig;
 use crate::config::ports::PortRegistry;
 use crate::config::registry::{ProjectEntry, Registry};
-use crate::core::git as creo_git;
+use crate::core::git as skap_git;
 use crate::core::ports as port_core;
 use crate::core::templates::Template;
 use crate::utils::output;
@@ -72,7 +72,7 @@ pub async fn run(args: NewArgs) -> Result<()> {
         .license
         .clone()
         .unwrap_or_else(|| cfg.defaults.license.clone());
-    let author = creo_git::detect_author_name();
+    let author = skap_git::detect_author_name();
     let ctx = crate::core::templates::make_context(&args.name, &license, &author, &ports_for_ctx);
     template
         .render_to(&target_dir, &ctx)
@@ -104,7 +104,7 @@ pub async fn run(args: NewArgs) -> Result<()> {
     // 6. git init
     let want_git = !args.no_git && cfg.defaults.git;
     if want_git {
-        creo_git::init_with_initial_commit(&target_dir, "Initial commit (creo)")?;
+        skap_git::init_with_initial_commit(&target_dir, "Initial commit (skap)")?;
         output::success("Git initialisiert (initial commit)");
     }
 
@@ -148,10 +148,10 @@ pub async fn run(args: NewArgs) -> Result<()> {
     registry.insert(args.name.clone(), entry);
     registry.save()?;
     port_reg.save()?;
-    output::step("Registriert in creo registry");
+    output::step("Registriert in skap registry");
 
-    // Per-project marker file (.creo.toml). Always written so that other
-    // contributors who clone the repo can run `creo doctor` immediately.
+    // Per-project marker file (.skap.toml). Always written so that other
+    // contributors who clone the repo can run `skap doctor` immediately.
     let pf_ports: BTreeMap<String, u16> = if want_docker {
         ports_for_ctx.clone()
     } else {
@@ -160,10 +160,10 @@ pub async fn run(args: NewArgs) -> Result<()> {
     let pf = crate::core::project_file::ProjectFile::new(&args.name, &template_name, pf_ports);
     pf.save(&target_dir).ok();
 
-    // 9. optional remote – delegated to `creo add github/gitlab` for now.
+    // 9. optional remote – delegated to `skap add github/gitlab` for now.
     if args.git_remote {
         output::warn(
-            "--git-remote: please run `creo add github` or `creo add gitlab` to publish (token-aware)",
+            "--git-remote: please run `skap add github` or `skap add gitlab` to publish (token-aware)",
         );
     }
 
@@ -175,7 +175,7 @@ pub async fn run(args: NewArgs) -> Result<()> {
     }
 
     println!();
-    output::info(&format!("Starten mit: creo start {}", args.name));
+    output::info(&format!("Starten mit: skap start {}", args.name));
     Ok(())
 }
 

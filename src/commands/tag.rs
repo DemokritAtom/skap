@@ -1,4 +1,4 @@
-//! `creo tag add|remove|list` – manage project tags after creation.
+//! `skap tag add|remove|list` – manage project tags after creation.
 
 use anyhow::{Context, Result};
 use colored::Colorize;

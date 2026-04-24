@@ -1,4 +1,4 @@
-//! Thin wrappers around `git2` for the operations creo needs:
+//! Thin wrappers around `git2` for the operations skap needs:
 //! init, initial commit, remote configuration.
 
 use std::path::Path;
@@ -36,7 +36,7 @@ pub fn set_remote_origin(path: &Path, url: &str) -> Result<()> {
 }
 
 /// Returns the configured author name from local or global git config,
-/// falling back to "creo".
+/// falling back to "skap".
 pub fn detect_author_name() -> String {
     if let Ok(cfg) = git2::Config::open_default() {
         if let Ok(name) = cfg.get_string("user.name") {
@@ -45,7 +45,7 @@ pub fn detect_author_name() -> String {
             }
         }
     }
-    "creo".to_string()
+    "skap".to_string()
 }
 
 fn author_signature(repo: &Repository) -> Result<Signature<'static>> {
@@ -54,11 +54,11 @@ fn author_signature(repo: &Repository) -> Result<Signature<'static>> {
         .as_ref()
         .and_then(|c| c.get_string("user.name").ok())
         .filter(|s| !s.is_empty())
-        .unwrap_or_else(|| "creo".to_string());
+        .unwrap_or_else(|| "skap".to_string());
     let email = cfg
         .as_ref()
         .and_then(|c| c.get_string("user.email").ok())
         .filter(|s| !s.is_empty())
-        .unwrap_or_else(|| "creo@local".to_string());
+        .unwrap_or_else(|| "skap@local".to_string());
     Ok(Signature::now(&name, &email)?)
 }

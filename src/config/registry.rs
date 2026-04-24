@@ -1,6 +1,6 @@
-//! Project registry (`~/.config/creo/registry.toml`).
+//! Project registry (`~/.config/skap/registry.toml`).
 //!
-//! Tracks every project creo has created or adopted: its path, template,
+//! Tracks every project skap has created or adopted: its path, template,
 //! creation time, tags, and which optional features are enabled.
 
 use std::collections::BTreeMap;

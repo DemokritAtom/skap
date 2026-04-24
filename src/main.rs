@@ -1,4 +1,4 @@
-//! creo – a lean, fast Linux CLI for managing dev projects.
+//! skap – a lean, fast Linux CLI for managing dev projects.
 //!
 //! Entry point: parses the CLI arguments and dispatches to the matching
 //! command module. All real logic lives in `commands::*`.

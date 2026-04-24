@@ -1,4 +1,4 @@
-//! `creo doctor` – system & project diagnosis.
+//! `skap doctor` – system & project diagnosis.
 
 use std::collections::HashMap;
 use std::process::Command;
@@ -47,7 +47,7 @@ pub async fn run() -> Result<()> {
         let path = std::path::Path::new(&e.path);
         if !path.exists() {
             println!("  {}  {:<15} path missing ({})", "✗".red(), name, e.path);
-            recommendations.push(format!("creo archive {name}  (path missing)"));
+            recommendations.push(format!("skap archive {name}  (path missing)"));
             continue;
         }
         if e.docker {
@@ -56,7 +56,7 @@ pub async fn run() -> Result<()> {
                 docker::Status::Down => println!("  {}  {:<15} stopped", "·".dimmed(), name),
                 docker::Status::Error => {
                     println!("  {}  {:<15} compose error", "⚠".yellow(), name);
-                    recommendations.push(format!("creo fix docker {name}"));
+                    recommendations.push(format!("skap fix docker {name}"));
                 }
                 docker::Status::Unknown => println!("  {}  {:<15} no docker", "·".dimmed(), name),
             }
@@ -66,7 +66,7 @@ pub async fn run() -> Result<()> {
     }
 
     // Port conflicts: find any reserved port that is also bound by another
-    // process not started by creo's compose stacks.
+    // process not started by skap's compose stacks.
     println!();
     section("PORT-KONFLIKTE");
     let mut by_port: HashMap<u16, Vec<String>> = HashMap::new();

@@ -1,7 +1,7 @@
 //! Stack detection in existing projects.
 //!
-//! Used by `creo clone` to pick a sensible template when a `.creo.toml`
-//! is not present in the cloned repository, and by `creo doctor` to
+//! Used by `skap clone` to pick a sensible template when a `.skap.toml`
+//! is not present in the cloned repository, and by `skap doctor` to
 //! sanity-check registered projects.
 //!
 //! The order of checks matters – more specific signals are tested first.

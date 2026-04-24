@@ -1,5 +1,5 @@
-//! `creo ports list [--used|--free]` – inspect every port reserved by
-//! creo and show whether it is currently bound on this machine.
+//! `skap ports list [--used|--free]` – inspect every port reserved by
+//! skap and show whether it is currently bound on this machine.
 
 use anyhow::Result;
 use colored::Colorize;

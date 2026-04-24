@@ -1,4 +1,4 @@
-//! `creo fix` – diagnose & repair common issues.
+//! `skap fix` – diagnose & repair common issues.
 //!
 //! Currently implements `ports`, `env`, `git`, `docker`, `permissions`,
 //! `deps` and `all` (running every check in sequence).
@@ -199,7 +199,7 @@ fn parse_env_keys(s: &str) -> Vec<String> {
 
 fn fix_git(dir: &Path) -> Result<()> {
     if !dir.join(".git").exists() {
-        output::warn("no git repository – run `creo add git`");
+        output::warn("no git repository – run `skap add git`");
         return Ok(());
     }
     // Verify the repo opens; if locked, suggest manual cleanup.

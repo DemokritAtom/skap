@@ -7,7 +7,7 @@ use clap::{Parser, Subcommand};
 
 #[derive(Debug, Parser)]
 #[command(
-    name = "creo",
+    name = "skap",
     version,
     about = "Lean, fast CLI for managing dev projects",
     long_about = None,
@@ -52,21 +52,21 @@ pub enum Command {
     Doctor,
     /// Clean docker artifacts (images, volumes) for a project.
     Clean(CleanArgs),
-    /// Archive a project (hide from `creo list`, stop containers).
+    /// Archive a project (hide from `skap list`, stop containers).
     Archive(ProjectArgs),
     /// Delete a project and all traces from registry and ports.
     Delete(DeleteArgs),
-    /// Read or modify global creo config.
+    /// Read or modify global skap config.
     Config(ConfigArgs),
-    /// Self-update creo from GitHub releases.
+    /// Self-update skap from GitHub releases.
     Update,
     /// Rename a project (folder, registry, ports).
     Rename(RenameArgs),
     /// Move a project to a different path.
     Move(MoveArgs),
-    /// Inspect creo's port reservations.
+    /// Inspect skap's port reservations.
     Ports(PortsArgs),
-    /// Clone an existing repository and register it with creo.
+    /// Clone an existing repository and register it with skap.
     Clone(CloneArgs),
     /// Manage tags on an existing project.
     Tag(TagArgs),
@@ -306,7 +306,7 @@ pub struct ConfigArgs {
 
 #[derive(Debug, Subcommand)]
 pub enum ConfigAction {
-    /// Set a config value, e.g. `creo config set editor vim`.
+    /// Set a config value, e.g. `skap config set editor vim`.
     Set { key: String, value: String },
     /// Get a config value.
     Get { key: String },

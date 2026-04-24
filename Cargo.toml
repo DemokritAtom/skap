@@ -1,18 +1,18 @@
 [package]
-name = "creo"
+name = "skap"
 version = "0.1.0"
 edition = "2021"
-authors = ["creo contributors"]
+authors = ["skap contributors"]
 description = "A lean, fast Linux CLI for managing dev projects"
 license = "MIT"
-repository = "https://github.com/creo-cli/creo"
-homepage = "https://github.com/creo-cli/creo"
+repository = "https://github.com/skap-cli/skap"
+homepage = "https://github.com/skap-cli/skap"
 readme = "README.md"
 keywords = ["cli", "dev", "scaffold", "docker", "project"]
 categories = ["command-line-utilities", "development-tools"]
 
 [[bin]]
-name = "creo"
+name = "skap"
 path = "src/main.rs"
 
 [dependencies]

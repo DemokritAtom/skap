@@ -1,4 +1,4 @@
-//! `creo open` – open a project in the editor / cd into it.
+//! `skap open` – open a project in the editor / cd into it.
 //!
 //! Because a child process can't change the parent shell's cwd, we rely
 //! on a small shell function the user adds to their rc file (printed by
@@ -36,7 +36,7 @@ pub async fn run(args: OpenArgs) -> Result<()> {
     }
     output::info(&format!("cd {}", path.display()));
     output::step(
-        "Tip: add the shell function from `creo --help` so `creo open` actually changes directory.",
+        "Tip: add the shell function from `skap --help` so `skap open` actually changes directory.",
     );
     Ok(())
 }

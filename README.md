@@ -1,14 +1,14 @@
-# creo
+# skap
 
 > **Ein Befehl reicht um loszulegen.**
 
-`creo` ist ein schlankes, schnelles CLI-Tool zur Verwaltung von Dev-Projekten unter Linux und macOS – geschrieben in Rust, distribuiert als einzelnes Binary.
+`skap` ist ein schlankes, schnelles CLI-Tool zur Verwaltung von Dev-Projekten unter Linux und macOS – geschrieben in Rust, distribuiert als einzelnes Binary.
 
 ```bash
-creo new myapp react          # Projekt erstellen
-creo start myapp              # Docker starten
-creo list                     # Alle Projekte
-creo add github myapp         # GitHub Remote anlegen
+skap new myapp react          # Projekt erstellen
+skap start myapp              # Docker starten
+skap list                     # Alle Projekte
+skap add github myapp         # GitHub Remote anlegen
 ```
 
 ---
@@ -18,52 +18,69 @@ creo add github myapp         # GitHub Remote anlegen
 | Prinzip | Bedeutung |
 |---|---|
 | **Zero friction** | Kein Wizard, keine Pflicht-Fragen beim Erstellen |
-| **Sane defaults** | `creo new myapp` → sofort fertig, alles optional |
-| **Erweiterbar** | Alles kann später nachträglich per `creo add` hinzugefügt werden |
+| **Sane defaults** | `skap new myapp` → sofort fertig, alles optional |
+| **Erweiterbar** | Alles kann später nachträglich per `skap add` hinzugefügt werden |
 | **Portabel** | Einzelnes Binary, keine Systemabhängigkeiten |
 | **Schnell** | Port-Checks via `TcpListener::bind`, keine externen Tools nötig |
 
 ---
 
-## Installation
+## Distribution
 
-### crates.io
+| Kanal        | Befehl                                  |
+|--------------|-----------------------------------------|
+| crates.io    | `cargo install skap`                    |
+| npm          | `npm install -g skap`                   |
+| Shell        | `curl -fsSL …/install.sh | sh`          |
+| GitHub Release | Binary direkt herunterladen           |
+
+**npm Upload:**
+
+Um skap bei npm zu veröffentlichen, benötigst du einen npm-Account und ein Repository mit einer gültigen `package.json` im `npm/`-Verzeichnis. Melde dich mit `npm login` an und führe im `npm/`-Ordner `npm publish --access public` aus. Das Paket erscheint dann auf [npmjs.com](https://www.npmjs.com/).
+
+**Unterstützte Plattformen:**
+
+| Platform      | Target                        |
+|--------------|-------------------------------|
+| Linux x64    | `x86_64-unknown-linux-gnu`     |
+| Linux arm64  | `aarch64-unknown-linux-gnu`    |
+| macOS x64    | `x86_64-apple-darwin`          |
+| macOS arm64  | `aarch64-apple-darwin`         |
+
+---
+## Hilfe & Übersicht
+
+Mit `skap help` oder `skap <Befehl> --help` erhältst du eine vollständige Übersicht aller verfügbaren Befehle, Subcommands und Optionen. Es werden nicht nur die Hauptbefehle angezeigt, sondern auch, welche Argumente und Flags nach jedem Befehl möglich sind. Beispiel:
+
 ```bash
-cargo install creo
+skap help
+skap add --help
+skap new --help
 ```
 
-### npm
-```bash
-npm install -g creo
-```
+So findest du schnell heraus, was du nach jedem Befehl noch angeben kannst (z.B. weitere Subcommands, Flags oder Argumente).
 
-### Shell-Installer
-```bash
-curl -fsSL https://raw.githubusercontent.com/creo-cli/creo/main/install.sh | sh
-```
-
-### Aus dem Quellcode
-```bash
-git clone https://github.com/creo-cli/creo
-cd creo
+---
+git clone https://github.com/skap-cli/skap
+cd skap
 cargo build --release
-# Binary liegt in target/release/creo
+# Binary liegt in target/release/skap
 ```
 
 ---
 
-## Shell-Integration (`creo open`)
+## Shell-Integration (`skap open`)
 
 Da ein Kindprozess das `cwd` des Parent-Shells nicht ändern kann, legt man
 einmalig eine Funktion in `.bashrc` / `.zshrc` an:
 
 ```bash
-function creo() {
+function skap() {
   if [[ "$1" == "open" ]]; then
-    dir=$(command creo open --print-path "$2")
-    if [ -n "$dir" ]; then cd "$dir" && command creo open --editor-only "$2"; fi
+    dir=$(command skap open --print-path "$2")
+    if [ -n "$dir" ]; then cd "$dir" && command skap open --editor-only "$2"; fi
   else
-    command creo "$@"
+    command skap "$@"
   fi
 }
 ```
@@ -72,7 +89,7 @@ function creo() {
 
 ## Globale Konfiguration
 
-Alle Konfigurationsdateien liegen unter `~/.config/creo/` und werden beim
+Alle Konfigurationsdateien liegen unter `~/.config/skap/` und werden beim
 ersten Start automatisch angelegt.
 
 | Datei | Inhalt |
@@ -84,29 +101,29 @@ ersten Start automatisch angelegt.
 Konfiguration verwalten:
 
 ```bash
-creo config set editor vim
-creo config set github_token ghp_xxxx
-creo config set default_license Apache
-creo config set base_port 4000
-creo config get editor
-creo config list
+skap config set editor vim
+skap config set github_token ghp_xxxx
+skap config set default_license Apache
+skap config set base_port 4000
+skap config get editor
+skap config list
 ```
 
 ---
 
 ## Befehle
 
-### `creo new <name> [template]`
+### `skap new <name> [template]`
 
 Erstellt ein neues Projekt. Keine interaktiven Fragen – alles läuft mit Defaults durch.
 
 ```bash
-creo new myapp                        # docker-only Template
-creo new myapp react                  # React + Vite
-creo new api fastapi --no-docker      # FastAPI ohne Docker
-creo new tool rust-cli --no-git --no-docker
-creo new shop next --git-remote --private --tag client
-creo new service express --port 5000  # Custom Base-Port
+skap new myapp                        # docker-only Template
+skap new myapp react                  # React + Vite
+skap new api fastapi --no-docker      # FastAPI ohne Docker
+skap new tool rust-cli --no-git --no-docker
+skap new shop next --git-remote --private --tag client
+skap new service express --port 5000  # Custom Base-Port
 ```
 
 **Was passiert automatisch:**
@@ -138,14 +155,14 @@ creo new service express --port 5000  # Custom Base-Port
 · Lizenzdatei: MIT
 ✓ Git initialisiert (initial commit)
 ✓ Docker Compose generiert (Ports: frontend:3000, backend:8000)
-· Registriert in creo registry
+· Registriert in skap registry
 
-→ Starten mit: creo start myapp
+→ Starten mit: skap start myapp
 ```
 
 ---
 
-### `creo add <feature> [project]`
+### `skap add <feature> [project]`
 
 Fügt einem bestehenden Projekt nachträglich Features hinzu. Wird kein Projektname angegeben, wird das aktuelle Verzeichnis erkannt.
 
@@ -167,15 +184,15 @@ Fügt einem bestehenden Projekt nachträglich Features hinzu. Wird kein Projektn
 | `ssl` | Self-signed Cert für lokales HTTPS |
 
 ```bash
-creo add docker myapp
-creo add github myapp
-creo add db                   # fragt welche DB
-creo add ci myapp
+skap add docker myapp
+skap add github myapp
+skap add db                   # fragt welche DB
+skap add ci myapp
 ```
 
 ---
 
-### `creo fix <problem> [project]`
+### `skap fix <problem> [project]`
 
 Diagnostiziert und repariert häufige Probleme.
 
@@ -190,9 +207,9 @@ Diagnostiziert und repariert häufige Probleme.
 | `all` | Alle obigen Checks nacheinander |
 
 ```bash
-creo fix ports myapp          # fragt einmalig um Bestätigung
-creo fix env                  # inferred vom cwd
-creo fix all myapp
+skap fix ports myapp          # fragt einmalig um Bestätigung
+skap fix env                  # inferred vom cwd
+skap fix all myapp
 ```
 
 **Port-Fix Ablauf:**
@@ -205,7 +222,7 @@ creo fix all myapp
 
 ---
 
-### `creo list`
+### `skap list`
 
 Alle registrierten Projekte in einer übersichtlichen Tabelle.
 
@@ -227,15 +244,15 @@ Die **GIT**-Spalte zeigt drei klar unterscheidbare Zustände:
 | `no`        | `no`         | Kein Git in diesem Projekt |
 
 ```bash
-creo list                     # alle aktiven
-creo list --tag client        # nach Tag filtern
-creo list --running           # nur laufende
-creo list --archived          # archivierte einschließen
+skap list                     # alle aktiven
+skap list --tag client        # nach Tag filtern
+skap list --running           # nur laufende
+skap list --archived          # archivierte einschließen
 ```
 
 ---
 
-### `creo status [project]`
+### `skap status [project]`
 
 Detailansicht eines einzelnen Projekts.
 
@@ -255,32 +272,32 @@ Disk Usage: 245 MB
 
 ---
 
-### `creo start / stop / restart [project]`
+### `skap start / stop / restart [project]`
 
 ```bash
-creo start myapp              # docker compose up -d
-creo stop myapp               # docker compose down
-creo restart myapp            # docker compose restart
+skap start myapp              # docker compose up -d
+skap stop myapp               # docker compose down
+skap restart myapp            # docker compose restart
 ```
 
-Fehlt Docker im Projekt: Hinweis mit `creo add docker`.
+Fehlt Docker im Projekt: Hinweis mit `skap add docker`.
 
 ---
 
-### `creo logs [project]`
+### `skap logs [project]`
 
 ```bash
-creo logs myapp               # letzte 50 Zeilen + follow
-creo logs myapp --tail 100
-creo logs myapp --service frontend
+skap logs myapp               # letzte 50 Zeilen + follow
+skap logs myapp --tail 100
+skap logs myapp --service frontend
 ```
 
 ---
 
-### `creo shell [project]`
+### `skap shell [project]`
 
 Öffnet eine Shell in einem laufenden Container. Gibt es mehrere Services, erscheint eine Auswahl.
-Läuft das Projekt aktuell **nicht**, fragt creo interaktiv:
+Läuft das Projekt aktuell **nicht**, fragt skap interaktiv:
 
 ```
 ⚠ Container von 'myapp' laufen aktuell nicht.
@@ -290,13 +307,13 @@ Läuft das Projekt aktuell **nicht**, fragt creo interaktiv:
 Bei `Y` wird `docker compose up -d` ausgeführt und anschließend die Shell geöffnet.
 
 ```bash
-creo shell myapp
-creo shell myapp --service backend
+skap shell myapp
+skap shell myapp --service backend
 ```
 
 ---
 
-### `creo run <project> <cmd...>`
+### `skap run <project> <cmd...>`
 
 Führt einen Befehl im Kontext des Projekts aus – entweder via `docker compose exec` (wenn Container läuft) oder direkt im Projektverzeichnis.
 Ist das Projekt als Docker-Projekt registriert, der Container läuft aber nicht, wird der Befehl auf dem Host ausgeführt – mit explizitem Hinweis:
@@ -306,14 +323,14 @@ Ist das Projekt als Docker-Projekt registriert, der Container läuft aber nicht,
 ```
 
 ```bash
-creo run myapp npm run build
-creo run api python manage.py migrate
-creo run tool cargo test
+skap run myapp npm run build
+skap run api python manage.py migrate
+skap run tool cargo test
 ```
 
 ---
 
-### `creo rename <old> <new>`
+### `skap rename <old> <new>`
 
 Benennt ein Projekt vollständig um:
 
@@ -321,28 +338,28 @@ Benennt ein Projekt vollständig um:
 - benennt das Verzeichnis um (`mv old new`),
 - aktualisiert den Eintrag in `registry.toml`,
 - benennt alle Schlüssel `old-*` in `ports.toml` zu `new-*`,
-- aktualisiert `.creo.toml` im Projektordner,
+- aktualisiert `.skap.toml` im Projektordner,
 - startet die Container danach wieder, falls sie vorher liefen.
 
 ```bash
-creo rename myapp my-renamed
+skap rename myapp my-renamed
 ```
 
 ---
 
-### `creo move <project> <new-path>`
+### `skap move <project> <new-path>`
 
 Verschiebt ein Projekt an einen anderen Ort im Dateisystem.
 Fehlt das Zielverzeichnis, wird der Elternpfad automatisch angelegt.
 Laufende Container werden vorher gestoppt und am Zielort neu gestartet.
 
 ```bash
-creo move api ~/work/backends/api
+skap move api ~/work/backends/api
 ```
 
 ---
 
-### `creo ports list [--used|--free]`
+### `skap ports list [--used|--free]`
 
 Listet alle in `ports.toml` reservierten Ports und zeigt den **aktuellen** Belegungsstatus auf der Maschine:
 
@@ -354,56 +371,56 @@ web-frontend                        3001     ⚪ frei
 ```
 
 Mit `--used` werden nur belegte, mit `--free` nur freie Ports angezeigt.
-Ist Emoji deaktiviert (`--no-emoji` oder `creo config set emoji false`), werden `USED` / `FREE` ausgegeben.
+Ist Emoji deaktiviert (`--no-emoji` oder `skap config set emoji false`), werden `USED` / `FREE` ausgegeben.
 
 ---
 
-### `creo clone <url> [name]`
+### `skap clone <url> [name]`
 
-Klont ein bestehendes Repo und registriert es bei creo.
-Findet sich im Repo eine `.creo.toml`, wird Template- und Port-Information daraus übernommen.
-Andernfalls erkennt creo den Stack heuristisch (Next, Vite, FastAPI, Django, Rust, Go, Express, …) und liest – falls vorhanden – Host-Ports aus `docker-compose.yml`.
+Klont ein bestehendes Repo und registriert es bei skap.
+Findet sich im Repo eine `.skap.toml`, wird Template- und Port-Information daraus übernommen.
+Andernfalls erkennt skap den Stack heuristisch (Next, Vite, FastAPI, Django, Rust, Go, Express, …) und liest – falls vorhanden – Host-Ports aus `docker-compose.yml`.
 
 ```bash
-creo clone https://github.com/me/cool-app.git
-creo clone git@gitlab.com:org/api.git api-prod
+skap clone https://github.com/me/cool-app.git
+skap clone git@gitlab.com:org/api.git api-prod
 ```
 
 Ist der abgeleitete Name (Repo-Basename) bereits in der Registry vergeben, **bricht** der Befehl ab und verlangt explizit einen anderen Namen – nichts wird stillschweigend überschrieben:
 
 ```
 Error: a project named 'cool-app' is already registered –
-       pass a different name: `creo clone https://github.com/me/cool-app.git <name>`
+       pass a different name: `skap clone https://github.com/me/cool-app.git <name>`
 ```
 
 ---
 
-### `creo tag <add|remove|list> ...`
+### `skap tag <add|remove|list> ...`
 
-Verwaltet Projekt-Tags nach der Erstellung. Tags werden in `registry.toml` gespeichert und von `creo list --tag <tag>` zur Filterung verwendet.
+Verwaltet Projekt-Tags nach der Erstellung. Tags werden in `registry.toml` gespeichert und von `skap list --tag <tag>` zur Filterung verwendet.
 
 ```bash
-creo tag add myapp client            # Tag hinzufügen (idempotent)
-creo tag remove myapp client         # Tag entfernen
-creo tag list myapp                  # Tags eines Projekts
-creo tag list                        # Tags aller Projekte
+skap tag add myapp client            # Tag hinzufügen (idempotent)
+skap tag remove myapp client         # Tag entfernen
+skap tag list myapp                  # Tags eines Projekts
+skap tag list                        # Tags aller Projekte
 ```
 
 ---
 
-### `creo open [project]`
+### `skap open [project]`
 
 Wechselt ins Projektverzeichnis und öffnet den Editor (siehe Shell-Integration).
 
 ```bash
-creo open myapp
-creo open myapp --editor vim
-creo open myapp --no-editor
+skap open myapp
+skap open myapp --editor vim
+skap open myapp --no-editor
 ```
 
 ---
 
-### `creo doctor`
+### `skap doctor`
 
 Vollständige Systemdiagnose.
 
@@ -424,62 +441,62 @@ PORT-KONFLIKTE
   keine
 
 EMPFEHLUNGEN
-  → creo archive old-project  (path missing)
+  → skap archive old-project  (path missing)
 ```
 
 ---
 
-### `creo clean [project]`
+### `skap clean [project]`
 
 ```bash
-creo clean myapp --images     # Docker Images entfernen
-creo clean myapp --volumes    # Docker Volumes entfernen
-creo clean myapp --all        # beides
+skap clean myapp --images     # Docker Images entfernen
+skap clean myapp --volumes    # Docker Volumes entfernen
+skap clean myapp --all        # beides
 ```
 
 ---
 
-### `creo archive [project]`
+### `skap archive [project]`
 
-Markiert ein Projekt als archiviert: stoppt laufende Container, blendet es aus `creo list` aus (außer mit `--archived`).
+Markiert ein Projekt als archiviert: stoppt laufende Container, blendet es aus `skap list` aus (außer mit `--archived`).
 
 ```bash
-creo archive old-project
-creo list --archived          # zeigt auch archivierte
+skap archive old-project
+skap list --archived          # zeigt auch archivierte
 ```
 
 ---
 
-### `creo update`
+### `skap update`
 
 Prüft GitHub Releases auf eine neuere Version und gibt einen Hinweis – das Binary wird **nicht** automatisch ersetzt.
 
 ```bash
-creo update
-# ✓ creo ist aktuell (0.1.0)
+skap update
+# ✓ skap ist aktuell (0.1.0)
 ```
 
 ```bash
-creo update
+skap update
 # → Neue Version verfügbar: 0.2.0  (du hast 0.1.0)
-#   • cargo install creo
-#   • npm i -g creo
-#   • curl -fsSL https://creo.dev/install.sh | sh
+#   • cargo install skap
+#   • npm i -g skap
+#   • curl -fsSL https://skap.dev/install.sh | sh
 #
-# · Release: https://github.com/creo-cli/creo/releases/tag/v0.2.0
+# · Release: https://github.com/skap-cli/skap/releases/tag/v0.2.0
 ```
 
 ---
 
-### `creo config init [--force]`
+### `skap config init [--force]`
 
-Legt eine frische `~/.config/creo/config.toml` mit den Default-Werten an.
+Legt eine frische `~/.config/skap/config.toml` mit den Default-Werten an.
 Existiert die Datei bereits, wird ohne `--force` nachgefragt.
 `registry.toml` und `ports.toml` werden **nie** angefasst.
 
 ```bash
-creo config init
-creo config init --force
+skap config init
+skap config init --force
 ```
 
 ---
@@ -522,32 +539,32 @@ Alle Templates sind ins Binary kompiliert (kein separater Download nötig).
 
 Ports werden automatisch zugewiesen – konfliktfrei:
 
-1. Liest `~/.config/creo/ports.toml` (bereits vergebene Ports)
+1. Liest `~/.config/skap/ports.toml` (bereits vergebene Ports)
 2. Prüft per `TcpListener::bind` ob der Port frei ist (kein `ss` / `netstat` nötig)
 3. Startet bei `base_port` (default: 3000) und inkrementiert bis ein freier Port gefunden wird
 4. Jeder Service bekommt seinen eigenen Port
 
 ```bash
-creo config set base_port 4000        # anderen Startport setzen
-creo new myapp react --port 5000      # einmalig überschreiben
-creo fix ports myapp                  # Konflikte auflösen
+skap config set base_port 4000        # anderen Startport setzen
+skap new myapp react --port 5000      # einmalig überschreiben
+skap fix ports myapp                  # Konflikte auflösen
 ```
 
 ### Live-Status & Emoji
 
-`creo ports list` zeigt zusätzlich an, ob der Port aktuell auf der Maschine belegt ist (🟢 `aktiv`) oder nicht (⚪ `frei`).
+`skap ports list` zeigt zusätzlich an, ob der Port aktuell auf der Maschine belegt ist (🟢 `aktiv`) oder nicht (⚪ `frei`).
 In Terminals ohne UTF-8-Locale, in CI-Umgebungen oder mit explizitem Flag wird automatisch ASCII verwendet:
 
 ```bash
-creo --no-emoji list           # einmalig ASCII
-creo config set emoji false    # dauerhaft ASCII (UP/OFF/ERR, USED/FREE)
+skap --no-emoji list           # einmalig ASCII
+skap config set emoji false    # dauerhaft ASCII (UP/OFF/ERR, USED/FREE)
 ```
 
 ---
 
 ## Konfigurationsdateien
 
-### `~/.config/creo/config.toml`
+### `~/.config/skap/config.toml`
 ```toml
 [defaults]
 editor = "code"
@@ -564,7 +581,7 @@ emoji = true                  # auf false setzen für ASCII-only Output
 base_port = 3000
 ```
 
-### `~/.config/creo/registry.toml`
+### `~/.config/skap/registry.toml`
 ```toml
 [projects.myapp]
 path = "/home/user/dev/myapp"
@@ -578,18 +595,18 @@ ports = [3000, 8000]
 archived = false
 ```
 
-### `~/.config/creo/ports.toml`
+### `~/.config/skap/ports.toml`
 ```toml
 [ports]
 myapp-frontend = 3000
 myapp-backend  = 8000
 ```
 
-### `<projekt>/.creo.toml`
+### `<projekt>/.skap.toml`
 
-Projektlokales Marker-File, das beim `creo new` und `creo add` automatisch geschrieben wird.
-Es gehört **ins Repo** (nicht in `.gitignore`), damit Mitentwickler·innen nach `git clone` direkt `creo doctor` und Co. nutzen können.
-`creo clone` liest diese Datei und kennt damit Template + Ports ohne Heuristik.
+Projektlokales Marker-File, das beim `skap new` und `skap add` automatisch geschrieben wird.
+Es gehört **ins Repo** (nicht in `.gitignore`), damit Mitentwickler·innen nach `git clone` direkt `skap doctor` und Co. nutzen können.
+`skap clone` liest diese Datei und kennt damit Template + Ports ohne Heuristik.
 
 ```toml
 [project]
@@ -608,8 +625,8 @@ backend  = 8000
 
 | Kanal | Befehl |
 |---|---|
-| crates.io | `cargo install creo` |
-| npm | `npm install -g creo` |
+| crates.io | `cargo install skap` |
+| npm | `npm install -g skap` |
 | Shell | `curl -fsSL …/install.sh \| sh` |
 | GitHub Release | Binary direkt herunterladen |
 
@@ -648,5 +665,5 @@ Noch **nicht** implementiert (geplant):
 
 Ausdrücklich **nicht** geplant:
 
-- **Windows Support** – creo geht stark auf Unix-Tooling (POSIX-Shells, `docker compose`, `~/.config`, Symlinks, Signal-Handling) zurück. Eine native Windows-Portierung ist aktuell nicht vorgesehen. WSL2 funktioniert wie ein normales Linux.
+- **Windows Support** – skap geht stark auf Unix-Tooling (POSIX-Shells, `docker compose`, `~/.config`, Symlinks, Signal-Handling) zurück. Eine native Windows-Portierung ist aktuell nicht vorgesehen. WSL2 funktioniert wie ein normales Linux.
 

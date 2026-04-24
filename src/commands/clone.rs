@@ -1,5 +1,5 @@
-//! `creo clone <url> [name]` – clone a git repo and register it as a
-//! creo project. Honours `.creo.toml` if present, otherwise falls back
+//! `skap clone <url> [name]` – clone a git repo and register it as a
+//! skap project. Honours `.skap.toml` if present, otherwise falls back
 //! to stack autodetection.
 
 use std::collections::BTreeMap;
@@ -32,7 +32,7 @@ pub async fn run(args: CloneArgs) -> Result<()> {
         let registry = Registry::load()?;
         if registry.get(&derived_name).is_some() {
             bail!(
-                "a project named '{derived_name}' is already registered – pass a different name: `creo clone {} <name>`",
+                "a project named '{derived_name}' is already registered – pass a different name: `skap clone {} <name>`",
                 args.url
             );
         }
@@ -54,14 +54,14 @@ pub async fn run(args: CloneArgs) -> Result<()> {
     let (template, ports_map): (String, BTreeMap<String, u16>) =
         if let Some(pf) = ProjectFile::load(&target)? {
             output::info(&format!(
-                ".creo.toml gefunden (template = {})",
+                ".skap.toml gefunden (template = {})",
                 pf.project.template
             ));
             (pf.project.template, pf.ports)
         } else {
             // Fallback: detect.
             let det = detect::detect_stack(&target).unwrap_or("docker-only");
-            output::info(&format!("Kein .creo.toml – erkannter Stack: {det}"));
+            output::info(&format!("Kein .skap.toml – erkannter Stack: {det}"));
 
             // Try to parse host ports from compose file.
             let mut map = BTreeMap::new();
@@ -75,7 +75,7 @@ pub async fn run(args: CloneArgs) -> Result<()> {
             (det.to_string(), map)
         };
 
-    // Register every port from .creo.toml in the global port registry.
+    // Register every port from .skap.toml in the global port registry.
     for (k, v) in &ports_map {
         port_reg.reserve(format!("{derived_name}-{k}"), *v);
     }
@@ -101,7 +101,7 @@ pub async fn run(args: CloneArgs) -> Result<()> {
     output::success(&format!(
         "Registriert: {derived_name} (template: {template})"
     ));
-    output::info(&format!("Starten mit: creo start {derived_name}"));
+    output::info(&format!("Starten mit: skap start {derived_name}"));
     Ok(())
 }
 

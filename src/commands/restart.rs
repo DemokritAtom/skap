@@ -1,4 +1,4 @@
-//! `creo restart` – restart a project's docker compose stack.
+//! `skap restart` – restart a project's docker compose stack.
 
 use anyhow::Result;
 

@@ -1,4 +1,4 @@
-//! Filesystem helpers used across creo.
+//! Filesystem helpers used across skap.
 
 use std::path::Path;
 

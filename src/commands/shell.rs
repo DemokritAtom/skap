@@ -1,4 +1,4 @@
-//! `creo shell` – open a shell in a running container.
+//! `skap shell` – open a shell in a running container.
 
 use anyhow::{bail, Result};
 use dialoguer::{Confirm, Select};

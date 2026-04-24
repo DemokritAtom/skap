@@ -1,4 +1,4 @@
-//! `creo config` – read or modify global creo config.
+//! `skap config` – read or modify global skap config.
 
 use anyhow::Result;
 use dialoguer::Confirm;

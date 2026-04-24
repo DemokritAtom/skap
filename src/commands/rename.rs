@@ -1,4 +1,4 @@
-//! `creo rename <old> <new>` – rename a project everywhere.
+//! `skap rename <old> <new>` – rename a project everywhere.
 //!
 //! Renames the on-disk directory, the registry key + path, and every
 //! key in the port registry that starts with `<old>-`. If the project's
@@ -82,7 +82,7 @@ pub async fn run(args: RenameArgs) -> Result<()> {
     port_reg.save()?;
     output::success("Ports aktualisiert");
 
-    // Update .creo.toml inside the project.
+    // Update .skap.toml inside the project.
     if let Ok(Some(mut pf)) = ProjectFile::load(&new_path) {
         pf.project.name = args.new_name.clone();
         pf.save(&new_path).ok();

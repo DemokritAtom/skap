@@ -1,4 +1,4 @@
-//! `creo delete` – remove a project and all traces from registry and ports.
+//! `skap delete` – remove a project and all traces from registry and ports.
 
 use anyhow::{bail, Context, Result};
 use dialoguer::{Confirm, Select};
