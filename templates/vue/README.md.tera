@@ -1,13 +1,13 @@
 # {{ project_name }}
 
-Vue 3 + Vite + TypeScript project scaffolded with [creo](https://github.com/creo-cli/creo).
+Vue 3 + Vite + TypeScript project scaffolded with [skap](https://github.com/skap-cli/skap).
 Runs on port `{{ frontend_port }}` with hot reload.
 
 ## Setup
 
 ```bash
 cp .env.example .env
-creo start {{ project_name }}
+skap start {{ project_name }}
 ```
 
 Then open <http://localhost:{{ frontend_port }}>.
@@ -15,10 +15,10 @@ Then open <http://localhost:{{ frontend_port }}>.
 ## Useful commands
 
 ```bash
-creo logs  {{ project_name }}
-creo shell {{ project_name }}
-creo run   {{ project_name }} npm run build
-creo stop  {{ project_name }}
+skap logs  {{ project_name }}
+skap shell {{ project_name }}
+skap run   {{ project_name }} npm run build
+skap stop  {{ project_name }}
 ```
 
 ---

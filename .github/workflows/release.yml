@@ -47,13 +47,13 @@ jobs:
         shell: bash
         run: |
           VERSION=${GITHUB_REF#refs/tags/}
-          NAME="creo-${VERSION}-${{ matrix.target }}"
+          NAME="skap-${VERSION}-${{ matrix.target }}"
           mkdir -p dist
-          cp target/${{ matrix.target }}/release/creo dist/creo
-          tar -C dist -czf "${NAME}.tar.gz" creo
+          cp target/${{ matrix.target }}/release/skap dist/skap
+          tar -C dist -czf "${NAME}.tar.gz" skap
       - uses: softprops/action-gh-release@v2
         with:
-          files: creo-*.tar.gz
+          files: skap-*.tar.gz
 
   publish-crate:
     needs: build

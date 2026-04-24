@@ -1,18 +1,18 @@
 # {{ project_name }}
 
-Django 5 + gunicorn project (Python 3.12) scaffolded with [creo](https://github.com/creo-cli/creo).
+Django 5 + gunicorn project (Python 3.12) scaffolded with [skap](https://github.com/skap-cli/skap).
 Listens on port `{{ web_port }}`. Migrations run automatically on container start.
 
 ## Setup
 
 ```bash
 cp .env.example .env
-creo start {{ project_name }}
+skap start {{ project_name }}
 ```
 
 Open <http://localhost:{{ web_port }}/> for the homepage routes
 or <http://localhost:{{ web_port }}/admin/> for the Django admin
-(create a superuser first: `creo run {{ project_name }} python manage.py createsuperuser`).
+(create a superuser first: `skap run {{ project_name }} python manage.py createsuperuser`).
 
 ## Endpoints
 
@@ -25,11 +25,11 @@ or <http://localhost:{{ web_port }}/admin/> for the Django admin
 ## Useful commands
 
 ```bash
-creo logs  {{ project_name }}
-creo shell {{ project_name }}
-creo run   {{ project_name }} python manage.py migrate
-creo run   {{ project_name }} python manage.py createsuperuser
-creo stop  {{ project_name }}
+skap logs  {{ project_name }}
+skap shell {{ project_name }}
+skap run   {{ project_name }} python manage.py migrate
+skap run   {{ project_name }} python manage.py createsuperuser
+skap stop  {{ project_name }}
 ```
 
 ## Layout

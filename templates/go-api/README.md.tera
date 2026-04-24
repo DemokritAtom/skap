@@ -1,13 +1,13 @@
 # {{ project_name }}
 
-Go 1.22 HTTP API scaffolded with [creo](https://github.com/creo-cli/creo).
+Go 1.22 HTTP API scaffolded with [skap](https://github.com/skap-cli/skap).
 Listens on port `{{ api_port }}` from a tiny multi-stage Alpine image.
 
 ## Setup
 
 ```bash
 cp .env.example .env
-creo start {{ project_name }}
+skap start {{ project_name }}
 ```
 
 ## Endpoints
@@ -20,10 +20,10 @@ creo start {{ project_name }}
 ## Useful commands
 
 ```bash
-creo logs  {{ project_name }}
-creo shell {{ project_name }}
-creo run   {{ project_name }} go test ./...
-creo stop  {{ project_name }}
+skap logs  {{ project_name }}
+skap shell {{ project_name }}
+skap run   {{ project_name }} go test ./...
+skap stop  {{ project_name }}
 ```
 
 ---

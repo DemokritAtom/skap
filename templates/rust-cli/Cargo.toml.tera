@@ -2,7 +2,7 @@
 name = "{{ project_name_snake }}"
 version = "0.1.0"
 edition = "2021"
-description = "{{ project_name }} – Rust CLI scaffolded with creo"
+description = "{{ project_name }} – Rust CLI scaffolded with skap"
 
 [dependencies]
 clap = { version = "4.5", features = ["derive"] }

@@ -1,9 +1,9 @@
 {
   "name": "skap",
   "version": "0.1.0",
-  "description": "A lean, fast Linux/macOS CLI for managing dev projects (vormals 'creo')",
+  "description": "A lean, fast Linux/macOS CLI for managing dev projects",
   "bin": {
-    "skap": "bin/creo"
+    "skap": "bin/skap"
   },
   "scripts": {
     "postinstall": "node install.js"
@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/skap-cli/skap#readme",
   "license": "MIT",
-  "keywords": ["cli", "scaffold", "docker", "dev", "project", "skap", "creo"],
+  "keywords": ["cli", "scaffold", "docker", "dev", "project", "skap"],
   "engines": {
     "node": ">=14"
   },

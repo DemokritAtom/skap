@@ -10,7 +10,7 @@ import (
 func main() {
 	root := &cobra.Command{
 		Use:   "{{ project_name }}",
-		Short: "{{ project_name }} – CLI scaffolded with creo",
+		Short: "{{ project_name }} – CLI scaffolded with skap",
 	}
 
 	hello := &cobra.Command{

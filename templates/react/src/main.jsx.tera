@@ -5,7 +5,7 @@ function App() {
   return (
     <main className="app">
       <h1>{{ project_name_pascal }}</h1>
-      <p>React + Vite + Express, scaffolded with creo.</p>
+      <p>React + Vite + Express, scaffolded with skap.</p>
       <p>API base URL: <code>{import.meta.env.VITE_API_URL}</code></p>
     </main>
   )

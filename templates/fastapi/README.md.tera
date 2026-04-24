@@ -1,13 +1,13 @@
 # {{ project_name }}
 
-FastAPI service on Python 3.12, scaffolded with [creo](https://github.com/creo-cli/creo).
+FastAPI service on Python 3.12, scaffolded with [skap](https://github.com/skap-cli/skap).
 Listens on port `{{ api_port }}` with uvicorn `--reload`.
 
 ## Setup
 
 ```bash
 cp .env.example .env
-creo start {{ project_name }}
+skap start {{ project_name }}
 ```
 
 Open <http://localhost:{{ api_port }}/docs> for the auto-generated Swagger UI.
@@ -22,10 +22,10 @@ Open <http://localhost:{{ api_port }}/docs> for the auto-generated Swagger UI.
 ## Useful commands
 
 ```bash
-creo logs  {{ project_name }}
-creo shell {{ project_name }}
-creo run   {{ project_name }} pytest
-creo stop  {{ project_name }}
+skap logs  {{ project_name }}
+skap shell {{ project_name }}
+skap run   {{ project_name }} pytest
+skap stop  {{ project_name }}
 ```
 
 ---

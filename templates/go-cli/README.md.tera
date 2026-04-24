@@ -1,6 +1,6 @@
 # {{ project_name }}
 
-Go 1.22 command-line tool scaffolded with [creo](https://github.com/creo-cli/creo).
+Go 1.22 command-line tool scaffolded with [skap](https://github.com/skap-cli/skap).
 Uses [cobra](https://github.com/spf13/cobra) for subcommands.
 
 ## Build & run
@@ -15,8 +15,8 @@ go build -o bin/{{ project_name_snake }}
 ## Useful commands
 
 ```bash
-creo run {{ project_name }} go test ./...
-creo run {{ project_name }} go vet ./...
+skap run {{ project_name }} go test ./...
+skap run {{ project_name }} go vet ./...
 ```
 
 ## Layout

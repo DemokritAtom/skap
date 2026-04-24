@@ -157,10 +157,10 @@ fn to_snake(s: &str) -> String {
 
 /// Optionally locate a template directory on disk (for development &
 /// user-provided templates). Returns `Some(path)` if `templates/<name>/`
-/// exists relative to the current working directory or `$CREO_TEMPLATES`.
+/// exists relative to the current working directory or `$SKAP_TEMPLATES`.
 #[allow(dead_code)]
 pub fn find_template_dir(name: &str) -> Option<PathBuf> {
-    if let Ok(env) = std::env::var("CREO_TEMPLATES") {
+    if let Ok(env) = std::env::var("SKAP_TEMPLATES") {
         let p = PathBuf::from(env).join(name);
         if p.is_dir() {
             return Some(p);

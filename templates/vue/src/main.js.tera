@@ -4,7 +4,7 @@ const App = {
   render() {
     return h('main', { class: 'app' }, [
       h('h1', '{{ project_name_pascal }}'),
-      h('p', 'Vue 3 + Vite project bootstrapped with creo.'),
+      h('p', 'Vue 3 + Vite project bootstrapped with skap.'),
       h('p', `API base URL: ${import.meta.env.VITE_API_URL}`)
     ])
   }

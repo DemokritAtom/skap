@@ -1,6 +1,6 @@
 # {{ project_name }}
 
-Rust command-line tool scaffolded with [creo](https://github.com/creo-cli/creo).
+Rust command-line tool scaffolded with [skap](https://github.com/skap-cli/skap).
 Uses `clap` 4 (derive), `anyhow` for ergonomic errors, and `colored` for output.
 
 ## Build & run
@@ -15,9 +15,9 @@ cargo build --release
 ## Useful commands
 
 ```bash
-creo run {{ project_name }} cargo build
-creo run {{ project_name }} cargo test
-creo run {{ project_name }} cargo clippy
+skap run {{ project_name }} cargo build
+skap run {{ project_name }} cargo test
+skap run {{ project_name }} cargo clippy
 ```
 
 ## Layout

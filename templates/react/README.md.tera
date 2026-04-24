@@ -1,6 +1,6 @@
 # {{ project_name }}
 
-React + Vite frontend with an Express backend, scaffolded with [creo](https://github.com/creo-cli/creo).
+React + Vite frontend with an Express backend, scaffolded with [skap](https://github.com/skap-cli/skap).
 
 ## Stack
 
@@ -12,7 +12,7 @@ React + Vite frontend with an Express backend, scaffolded with [creo](https://gi
 
 ```bash
 cp .env.example .env
-creo start {{ project_name }}
+skap start {{ project_name }}
 ```
 
 Then open <http://localhost:{{ frontend_port }}>.
@@ -20,11 +20,11 @@ Then open <http://localhost:{{ frontend_port }}>.
 ## Useful commands
 
 ```bash
-creo logs {{ project_name }}                  # follow logs
-creo logs {{ project_name }} --service backend
-creo shell {{ project_name }} --service backend
-creo run  {{ project_name }} npm test
-creo stop {{ project_name }}
+skap logs {{ project_name }}                  # follow logs
+skap logs {{ project_name }} --service backend
+skap shell {{ project_name }} --service backend
+skap run  {{ project_name }} npm test
+skap stop {{ project_name }}
 ```
 
 ## Layout
