@@ -61,6 +61,10 @@ skap new --help
 So findest du schnell heraus, was du nach jedem Befehl noch angeben kannst (z.B. weitere Subcommands, Flags oder Argumente).
 
 ---
+
+## Build from Source
+
+```bash
 git clone https://github.com/skap-cli/skap
 cd skap
 cargo build --release
