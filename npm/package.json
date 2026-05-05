@@ -1,29 +1,22 @@
 {
-  "name": "skap",
+  "name": "@demokrit/skap",
   "version": "0.1.0",
   "description": "A lean, fast Linux/macOS CLI for managing dev projects",
   "bin": {
     "skap": "bin/skap"
   },
-  "scripts": {
-    "postinstall": "node install.js"
-  },
   "files": [
-    "install.js",
     "bin/",
     "README.md",
     "LICENSE"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/skap-cli/skap.git"
+    "url": "https://github.com/DemokritAtom/skap.git"
   },
-  "homepage": "https://github.com/skap-cli/skap#readme",
+  "homepage": "https://github.com/DemokritAtom/skap#readme",
   "license": "MIT",
   "keywords": ["cli", "scaffold", "docker", "dev", "project", "skap"],
-  "engines": {
-    "node": ">=14"
-  },
-  "os": ["linux", "darwin"],
-  "cpu": ["x64", "arm64"]
+  "os": ["linux"],
+  "cpu": ["x64"]
 }

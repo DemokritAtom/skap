@@ -28,7 +28,7 @@ skap add github myapp         # GitHub Remote anlegen
 ## Installation
 
 ```bash
-npm install -g @demokrit/skap
+npm install -g skap
 ```
 
 > Erfordert Node.js ≥ 14. Das passende Binary für deine Plattform wird automatisch heruntergeladen.
