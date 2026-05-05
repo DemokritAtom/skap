@@ -1,8 +1,8 @@
 //! `skap delete` – remove a project and all traces from registry and ports.
 
-use anyhow::{bail, Context, Result};
-use dialoguer::{Confirm, Select};
-use crate::cli::{ProjectArgs, DeleteArgs};
+use anyhow::{Context, Result};
+use dialoguer::Select;
+use crate::cli::DeleteArgs;
 use crate::commands::common::resolve_project;
 use crate::config::registry::Registry;
 use crate::config::ports::PortRegistry;
@@ -25,7 +25,6 @@ pub async fn run(args: DeleteArgs) -> Result<()> {
         println!("\n⚠ Projekt \"{}\" löschen?", name);
         println!("  Pfad:   {}", entry.path);
         println!("  Ports:  {}", entry.ports.iter().map(|p| p.to_string()).collect::<Vec<_>>().join(", "));
-        println!("");
         let options = vec![
             "Alles löschen (Ordner + Registry + Ports)",
             "Nur aus Registry entfernen (Ordner bleibt)",
