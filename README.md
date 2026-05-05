@@ -25,27 +25,22 @@ skap add github myapp         # GitHub Remote anlegen
 
 ---
 
-## Distribution
+## Installation
 
-| Kanal        | Befehl                                  |
-|--------------|-----------------------------------------|
-| crates.io    | `cargo install skap`                    |
-| npm          | `npm install -g skap`                   |
-| Shell        | `curl -fsSL …/install.sh | sh`          |
-| GitHub Release | Binary direkt herunterladen           |
+```bash
+npm install -g skap
+```
 
-**npm Upload:**
-
-Um skap bei npm zu veröffentlichen, benötigst du einen npm-Account und ein Repository mit einer gültigen `package.json` im `npm/`-Verzeichnis. Melde dich mit `npm login` an und führe im `npm/`-Ordner `npm publish --access public` aus. Das Paket erscheint dann auf [npmjs.com](https://www.npmjs.com/).
+> Erfordert Node.js ≥ 14. Das passende Binary für deine Plattform wird automatisch heruntergeladen.
 
 **Unterstützte Plattformen:**
 
-| Platform      | Target                        |
-|--------------|-------------------------------|
-| Linux x64    | `x86_64-unknown-linux-gnu`     |
-| Linux arm64  | `aarch64-unknown-linux-gnu`    |
-| macOS x64    | `x86_64-apple-darwin`          |
-| macOS arm64  | `aarch64-apple-darwin`         |
+| Platform    |
+|-------------|
+| Linux x64   |
+| Linux arm64 |
+| macOS x64   |
+| macOS arm64 |
 
 ---
 ## Hilfe & Übersicht
@@ -59,17 +54,6 @@ skap new --help
 ```
 
 So findest du schnell heraus, was du nach jedem Befehl noch angeben kannst (z.B. weitere Subcommands, Flags oder Argumente).
-
----
-
-## Build from Source
-
-```bash
-git clone https://github.com/skap-cli/skap
-cd skap
-cargo build --release
-# Binary liegt in target/release/skap
-```
 
 ---
 
