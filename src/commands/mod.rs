@@ -13,6 +13,7 @@ pub mod clean;
 pub mod clone;
 pub mod common;
 pub mod config;
+pub mod delete;
 pub mod doctor;
 pub mod fix;
 pub mod list;
@@ -30,7 +31,6 @@ pub mod status;
 pub mod stop;
 pub mod tag;
 pub mod update;
-pub mod delete;
 
 /// Dispatch the parsed CLI to the corresponding command implementation.
 pub async fn dispatch(cli: Cli) -> Result<()> {
