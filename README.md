@@ -158,8 +158,8 @@ Fügt einem bestehenden Projekt nachträglich Features hinzu. Wird kein Projektn
 |---|---|
 | `git` | `git init` + `.gitignore` + initialer Commit |
 | `docker` | `Dockerfile` + `docker-compose.yml` generieren |
-| `github` | GitHub-Remote anlegen (braucht `github_token` in config) |
-| `gitlab` | GitLab-Remote anlegen (braucht `gitlab_token` in config) |
+| `github` | GitHub-Remote anlegen (braucht `github_token` in config; `--private` für privates Repo) |
+| `gitlab` | GitLab-Remote anlegen (braucht `gitlab_token` in config; `--private` für privates Repo) |
 | `env` | `.env` + `.env.example` anlegen |
 | `lint` | Linter-Config (ESLint / Clippy / Ruff je nach Stack) |
 | `ci` | `.github/workflows/ci.yml` generieren |
@@ -174,6 +174,7 @@ Fügt einem bestehenden Projekt nachträglich Features hinzu. Wird kein Projektn
 ```bash
 skap add docker myapp
 skap add github myapp
+skap add github myapp --private
 skap add db                   # fragt welche DB
 skap add ci myapp
 ```
@@ -466,12 +467,11 @@ skap update
 
 ```bash
 skap update
-# → Neue Version verfügbar: 0.2.0  (du hast 0.1.0)
-#   • cargo install skap
-#   • npm i -g skap
-#   • curl -fsSL https://skap.dev/install.sh | sh
+# → Neue Version verfügbar: 0.2.0  (du hast 0.1.1)
+#   • npm i -g @demokrit/skap
+#   • curl -fsSL https://raw.githubusercontent.com/DemokritAtom/skap/main/install.sh | sh
 #
-# · Release: https://github.com/skap-cli/skap/releases/tag/v0.2.0
+# · Release: https://github.com/DemokritAtom/skap/releases/tag/v0.2.0
 ```
 
 ---
@@ -614,7 +614,7 @@ backend  = 8000
 | Kanal | Befehl |
 |---|---|
 | crates.io | `cargo install skap` |
-| npm | `npm install -g skap` |
+| npm | `npm install -g @demokrit/skap` |
 | Shell | `curl -fsSL …/install.sh \| sh` |
 | GitHub Release | Binary direkt herunterladen |
 

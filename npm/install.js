@@ -19,7 +19,7 @@ const zlib = require('zlib');
 const pump = promisify(pipeline);
 
 const VERSION = require('./package.json').version;
-const REPO = 'skap-cli/skap';
+const REPO = 'DemokritAtom/skap';
 
 function detectTarget() {
   const platform = os.platform();

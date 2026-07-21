@@ -10,7 +10,7 @@ use serde::Deserialize;
 
 use crate::utils::output;
 
-const RELEASES_URL: &str = "https://api.github.com/repos/skap-cli/skap/releases/latest";
+const RELEASES_URL: &str = "https://api.github.com/repos/DemokritAtom/skap/releases/latest";
 
 #[derive(Deserialize)]
 struct Release {
@@ -39,9 +39,8 @@ pub async fn run() -> Result<()> {
         output::info(&format!(
             "Neue Version verfügbar: {latest}  (du hast {current})"
         ));
-        println!("  • cargo install skap");
-        println!("  • npm i -g skap");
-        println!("  • curl -fsSL https://skap.dev/install.sh | sh");
+        println!("  • npm i -g @demokrit/skap");
+        println!("  • curl -fsSL https://raw.githubusercontent.com/DemokritAtom/skap/main/install.sh | sh");
         println!();
         output::step(&format!("Release: {}", r.html_url));
     }

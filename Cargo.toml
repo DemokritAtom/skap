@@ -1,12 +1,12 @@
 [package]
 name = "skap"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 authors = ["skap contributors"]
 description = "A lean, fast Linux CLI for managing dev projects"
 license = "MIT"
-repository = "https://github.com/skap-cli/skap"
-homepage = "https://github.com/skap-cli/skap"
+repository = "https://github.com/DemokritAtom/skap"
+homepage = "https://github.com/DemokritAtom/skap"
 readme = "README.md"
 keywords = ["cli", "dev", "scaffold", "docker", "project"]
 categories = ["command-line-utilities", "development-tools"]

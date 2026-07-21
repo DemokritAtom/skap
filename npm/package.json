@@ -1,6 +1,6 @@
 {
   "name": "@demokrit/skap",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A lean, fast Linux/macOS CLI for managing dev projects",
   "bin": {
     "skap": "bin/skap"
@@ -17,6 +17,6 @@
   "homepage": "https://github.com/DemokritAtom/skap#readme",
   "license": "MIT",
   "keywords": ["cli", "scaffold", "docker", "dev", "project", "skap"],
-  "os": ["linux"],
-  "cpu": ["x64"]
+  "os": ["linux", "darwin"],
+  "cpu": ["x64", "arm64"]
 }

@@ -1,10 +1,10 @@
 #!/usr/bin/env sh
 # Shell installer for skap.
 #
-# Usage: curl -fsSL https://raw.githubusercontent.com/skap-cli/skap/main/install.sh | sh
+# Usage: curl -fsSL https://raw.githubusercontent.com/DemokritAtom/skap/main/install.sh | sh
 set -eu
 
-REPO="skap-cli/skap"
+REPO="DemokritAtom/skap"
 INSTALL_DIR="${SKAP_INSTALL_DIR:-$HOME/.local/bin}"
 
 OS="$(uname -s)"
