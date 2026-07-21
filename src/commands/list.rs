@@ -119,9 +119,11 @@ fn compute_widths<'a, I: Iterator<Item = &'a Row>>(rows: I) -> [usize; 6] {
             .iter()
             .enumerate()
         {
-            // Approximate display width by char count; emoji are wide but
-            // this keeps the implementation dependency-free.
-            let len = s.chars().count();
+            // Approximate display width by visible char count (ANSI color
+            // codes from the `colored` crate are invisible and must not
+            // count towards column width); emoji are wide but this keeps
+            // the implementation dependency-free.
+            let len = output::visible_width(s);
             if len > w[i] {
                 w[i] = len;
             }
@@ -134,7 +136,7 @@ fn print_row(r: &Row, w: &[usize; 6], header: bool) {
     let cells = [&r.name, &r.template, &r.docker, &r.git, &r.ports, &r.tags];
     let mut line = String::new();
     for (i, c) in cells.iter().enumerate() {
-        let pad = w[i] - c.chars().count();
+        let pad = w[i].saturating_sub(output::visible_width(c));
         line.push_str(c);
         for _ in 0..pad {
             line.push(' ');

@@ -20,6 +20,7 @@ use anyhow::{bail, Context, Result};
 use chrono::Utc;
 
 use crate::cli::NewArgs;
+use crate::commands::common::validate_project_name;
 use crate::config::global::GlobalConfig;
 use crate::config::ports::PortRegistry;
 use crate::config::registry::{ProjectEntry, Registry};
@@ -29,6 +30,7 @@ use crate::core::templates::Template;
 use crate::utils::output;
 
 pub async fn run(args: NewArgs) -> Result<()> {
+    validate_project_name(&args.name)?;
     let cfg = GlobalConfig::load()?;
     let mut registry = Registry::load()?;
     let mut port_reg = PortRegistry::load()?;
@@ -162,9 +164,10 @@ pub async fn run(args: NewArgs) -> Result<()> {
 
     // 9. optional remote – delegated to `skap add github/gitlab` for now.
     if args.git_remote {
-        output::warn(
-            "--git-remote: please run `skap add github` or `skap add gitlab` to publish (token-aware)",
-        );
+        let private_flag = if args.private { " --private" } else { "" };
+        output::warn(&format!(
+            "--git-remote: please run `skap add github{private_flag}` or `skap add gitlab{private_flag}` to publish (token-aware)",
+        ));
     }
 
     // 10. open editor if requested

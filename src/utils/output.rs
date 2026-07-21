@@ -92,6 +92,31 @@ pub fn port_status_symbol(in_use: bool) -> String {
     }
 }
 
+/// Character count of `s` ignoring ANSI escape sequences (`\x1b[...m`).
+/// Table layout code needs this instead of `s.chars().count()` for any
+/// string that may have already been colored via the `colored` crate –
+/// counting the escape bytes as visible characters throws off column
+/// alignment as soon as colors are enabled.
+pub fn visible_width(s: &str) -> usize {
+    let mut width = 0;
+    let mut chars = s.chars();
+    while let Some(c) = chars.next() {
+        if c == '\u{1b}' {
+            // Skip `ESC [ ... <final byte>` (CSI sequence).
+            if chars.next() == Some('[') {
+                for c2 in chars.by_ref() {
+                    if c2.is_ascii_alphabetic() {
+                        break;
+                    }
+                }
+            }
+        } else {
+            width += 1;
+        }
+    }
+    width
+}
+
 // ---------------------------------------------------------------------------
 // Print helpers
 // ---------------------------------------------------------------------------
@@ -127,4 +152,31 @@ pub fn info(msg: &str) {
 /// Dimmed dot – subordinate progress step.
 pub fn step(msg: &str) {
     println!("{} {}", sym("·", "..").dimmed(), msg);
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn visible_width_ignores_ansi_codes() {
+        // Built by hand rather than via `colored`, whose output depends
+        // on TTY/env detection and would make this test flaky under
+        // `cargo test` (no real terminal attached, colors may be
+        // suppressed automatically).
+        let colored = "\x1b[32mUP\x1b[0m";
+        assert_eq!(visible_width(colored), 2);
+    }
+
+    #[test]
+    fn visible_width_matches_plain_char_count_without_colors() {
+        assert_eq!(visible_width("hello"), 5);
+        assert_eq!(visible_width(""), 0);
+    }
+
+    #[test]
+    fn visible_width_handles_multiple_sequences() {
+        let s = "\x1b[31ma\x1b[0m\x1b[1mbc\x1b[0m";
+        assert_eq!(visible_width(s), 3);
+    }
 }

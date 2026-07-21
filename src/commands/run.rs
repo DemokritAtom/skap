@@ -18,8 +18,10 @@ pub async fn run(args: RunArgs) -> Result<()> {
         bail!("no command given");
     }
     let dir = std::path::PathBuf::from(&entry.path);
+    let container_up =
+        entry.docker && docker::has_compose(&dir) && docker::status(&dir) == docker::Status::Up;
 
-    if entry.docker && docker::has_compose(&dir) && docker::status(&dir) == docker::Status::Up {
+    if container_up {
         let services = docker::services(&dir).unwrap_or_default();
         if services.len() == 1 {
             let svc = &services[0];
@@ -29,11 +31,17 @@ pub async fn run(args: RunArgs) -> Result<()> {
             }
             return docker::compose(&dir, &argv);
         }
+        if services.len() > 1 {
+            output::warn(&format!(
+                "Mehrere Services ({}) – kann nicht automatisch wählen, führe Befehl direkt im Projektverzeichnis aus.",
+                services.join(", ")
+            ));
+        }
     }
 
     // Fall back to host execution. Be loud about it when docker was
     // expected but unavailable so the user isn't surprised.
-    if entry.docker {
+    if entry.docker && !container_up {
         output::warn("Container läuft nicht – führe Befehl direkt im Projektverzeichnis aus.");
     }
     let status = std::process::Command::new(&args.cmd[0])

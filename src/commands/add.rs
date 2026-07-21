@@ -21,8 +21,8 @@ pub async fn run(args: AddArgs) -> Result<()> {
     match args.feature.to_ascii_lowercase().as_str() {
         "git" => add_git(&dir, &mut entry)?,
         "docker" => add_docker(&dir, &name, &mut entry)?,
-        "github" => add_github(&dir, &name, &mut entry, &cfg).await?,
-        "gitlab" => add_gitlab(&dir, &name, &mut entry, &cfg).await?,
+        "github" => add_github(&dir, &name, &mut entry, &cfg, args.private).await?,
+        "gitlab" => add_gitlab(&dir, &name, &mut entry, &cfg, args.private).await?,
         "env" => add_env(&dir)?,
         "lint" => add_lint(&dir)?,
         "ci" => add_ci(&dir)?,
@@ -31,7 +31,7 @@ pub async fn run(args: AddArgs) -> Result<()> {
         "readme" => add_readme(&dir, &name)?,
         "makefile" => add_makefile(&dir)?,
         "devcontainer" => add_devcontainer(&dir, &name)?,
-        "db" => add_db(&dir)?,
+        "db" => add_db(&dir, &name, &mut entry)?,
         "ssl" => add_ssl(&dir)?,
         other => bail!("unknown feature '{other}'. Try one of: git docker github gitlab env lint ci precommit license readme makefile devcontainer db ssl"),
     }
@@ -103,14 +103,18 @@ async fn add_github(
     project: &str,
     entry: &mut crate::config::registry::ProjectEntry,
     cfg: &GlobalConfig,
+    private: bool,
 ) -> Result<()> {
     if cfg.defaults.github_token.is_empty() {
         bail!("no github_token in config. Set it via: skap config set github_token <token>");
     }
-    let url = github::create_repo(&cfg.defaults.github_token, project, false).await?;
+    let url = github::create_repo(&cfg.defaults.github_token, project, private).await?;
     skap_git::set_remote_origin(dir, &url)?;
     entry.git_remote = url.clone();
-    output::success(&format!("GitHub remote: {url}"));
+    output::success(&format!(
+        "GitHub remote ({}): {url}",
+        if private { "private" } else { "public" }
+    ));
     Ok(())
 }
 
@@ -119,6 +123,7 @@ async fn add_gitlab(
     project: &str,
     entry: &mut crate::config::registry::ProjectEntry,
     cfg: &GlobalConfig,
+    private: bool,
 ) -> Result<()> {
     if cfg.defaults.gitlab_token.is_empty() {
         bail!("no gitlab_token in config. Set it via: skap config set gitlab_token <token>");
@@ -127,12 +132,15 @@ async fn add_gitlab(
         &cfg.defaults.gitlab_url,
         &cfg.defaults.gitlab_token,
         project,
-        false,
+        private,
     )
     .await?;
     skap_git::set_remote_origin(dir, &url)?;
     entry.git_remote = url.clone();
-    output::success(&format!("GitLab remote: {url}"));
+    output::success(&format!(
+        "GitLab remote ({}): {url}",
+        if private { "private" } else { "public" }
+    ));
     Ok(())
 }
 
@@ -252,38 +260,66 @@ fn add_devcontainer(dir: &Path, project: &str) -> Result<()> {
     Ok(())
 }
 
-fn add_db(dir: &Path) -> Result<()> {
+fn add_db(
+    dir: &Path,
+    project: &str,
+    entry: &mut crate::config::registry::ProjectEntry,
+) -> Result<()> {
+    let compose = dir.join("docker-compose.yml");
+    if !compose.exists() {
+        bail!("no docker-compose.yml. Run `skap add docker` first.");
+    }
+
     let dbs = ["postgres", "mysql", "mongo", "redis"];
     let pick = Select::new()
         .with_prompt("Datenbank")
         .items(&dbs)
         .default(0)
         .interact()?;
-    let service = match dbs[pick] {
+    let db_name = dbs[pick];
+
+    // Reserve a free host port via skap's own port registry instead of
+    // hardcoding the DB's default port – two projects both adding
+    // postgres would otherwise collide on host port 5432 the moment both
+    // are started.
+    let container_port: u16 = match db_name {
+        "postgres" => 5432,
+        "mysql" => 3306,
+        "mongo" => 27017,
+        "redis" => 6379,
+        _ => unreachable!(),
+    };
+    let mut port_reg = PortRegistry::load()?;
+    let host_port = port_core::find_free_port_excluding(container_port, &port_reg, &[]);
+    port_reg.reserve(project, "db", host_port);
+    port_reg.save()?;
+
+    let service = match db_name {
         "postgres" => {
             let name: String = Input::new()
                 .with_prompt("Datenbank-Name")
                 .default("app".into())
                 .interact_text()?;
             format!(
-                "  db:\n    image: postgres:16\n    environment:\n      POSTGRES_PASSWORD: postgres\n      POSTGRES_DB: {name}\n    ports:\n      - \"5432:5432\"\n    volumes:\n      - db-data:/var/lib/postgresql/data\n"
+                "  db:\n    image: postgres:16\n    environment:\n      POSTGRES_PASSWORD: postgres\n      POSTGRES_DB: {name}\n    ports:\n      - \"{host_port}:5432\"\n    volumes:\n      - db-data:/var/lib/postgresql/data\n"
             )
         }
-        "mysql" => "  db:\n    image: mysql:8\n    environment:\n      MYSQL_ROOT_PASSWORD: root\n    ports:\n      - \"3306:3306\"\n    volumes:\n      - db-data:/var/lib/mysql\n".into(),
-        "mongo" => "  db:\n    image: mongo:7\n    ports:\n      - \"27017:27017\"\n    volumes:\n      - db-data:/data/db\n".into(),
-        "redis" => "  db:\n    image: redis:7-alpine\n    ports:\n      - \"6379:6379\"\n".into(),
+        "mysql" => format!("  db:\n    image: mysql:8\n    environment:\n      MYSQL_ROOT_PASSWORD: root\n    ports:\n      - \"{host_port}:3306\"\n    volumes:\n      - db-data:/var/lib/mysql\n"),
+        "mongo" => format!("  db:\n    image: mongo:7\n    ports:\n      - \"{host_port}:27017\"\n    volumes:\n      - db-data:/data/db\n"),
+        "redis" => format!("  db:\n    image: redis:7-alpine\n    ports:\n      - \"{host_port}:6379\"\n"),
         _ => unreachable!(),
     };
 
-    let compose = dir.join("docker-compose.yml");
-    if !compose.exists() {
-        bail!("no docker-compose.yml. Run `skap add docker` first.");
-    }
     let mut existing = std::fs::read_to_string(&compose)?;
     if !existing.ends_with('\n') {
         existing.push('\n');
     }
-    if !existing.contains("volumes:") {
+    // `existing.contains("volumes:")` would also match an unrelated
+    // per-service `volumes:` key (e.g. the `app` service's bind mount),
+    // which are indented and thus not a *top-level* volumes block. Only
+    // an unindented `volumes:` line declares named volumes.
+    let has_top_level_volumes = existing.lines().any(|l| l == "volumes:");
+    if !has_top_level_volumes {
         existing.push_str("\nvolumes:\n  db-data:\n");
     }
     // Insert the service before the `volumes:` block, or at the end.
@@ -294,7 +330,14 @@ fn add_db(dir: &Path) -> Result<()> {
         format!("{existing}{service}")
     };
     std::fs::write(&compose, new)?;
-    output::success(&format!("{} hinzugefügt zu docker-compose.yml", dbs[pick]));
+    if !entry.ports.contains(&host_port) {
+        entry.ports.push(host_port);
+        entry.ports.sort();
+    }
+    output::success(&format!(
+        "{} hinzugefügt zu docker-compose.yml (Port {host_port})",
+        db_name
+    ));
     Ok(())
 }
 

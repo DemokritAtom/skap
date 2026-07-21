@@ -1,13 +1,15 @@
 //! `skap rename <old> <new>` – rename a project everywhere.
 //!
-//! Renames the on-disk directory, the registry key + path, and every
-//! key in the port registry that starts with `<old>-`. If the project's
-//! containers were running, they are stopped before the rename and
-//! restarted afterwards.
+//! Renames the on-disk directory, the registry entry, every port
+//! reservation belonging to the project, and the `container_name`
+//! entries in its `docker-compose.yml`. If the project's containers
+//! were running, they are stopped before the rename and restarted
+//! afterwards.
 
 use anyhow::{bail, Context, Result};
 
 use crate::cli::RenameArgs;
+use crate::commands::common::validate_project_name;
 use crate::config::ports::PortRegistry;
 use crate::config::registry::Registry;
 use crate::core::docker;
@@ -15,6 +17,7 @@ use crate::core::project_file::ProjectFile;
 use crate::utils::output;
 
 pub async fn run(args: RenameArgs) -> Result<()> {
+    validate_project_name(&args.new_name)?;
     let mut registry = Registry::load()?;
     let mut port_reg = PortRegistry::load()?;
 
@@ -46,13 +49,7 @@ pub async fn run(args: RenameArgs) -> Result<()> {
     }
 
     // Move the directory.
-    std::fs::rename(&old_path, &new_path).with_context(|| {
-        format!(
-            "failed to rename {} -> {}",
-            old_path.display(),
-            new_path.display()
-        )
-    })?;
+    crate::utils::fs::move_dir(&old_path, &new_path)?;
     output::success("Ordner umbenannt");
 
     // Update registry: remove old, insert new with patched path.
@@ -63,24 +60,25 @@ pub async fn run(args: RenameArgs) -> Result<()> {
     registry.save()?;
     output::success("Registry aktualisiert");
 
-    // Update port registry keys.
-    let prefix_old = format!("{}-", args.old_name);
-    let prefix_new = format!("{}-", args.new_name);
-    let to_rename: Vec<(String, u16)> = port_reg
-        .ports
-        .iter()
-        .filter(|(k, _)| k.starts_with(&prefix_old))
-        .map(|(k, v)| (k.clone(), *v))
-        .collect();
-    for (k, _) in &to_rename {
-        port_reg.release(k);
-    }
-    for (k, v) in &to_rename {
-        let renamed = k.replacen(&prefix_old, &prefix_new, 1);
-        port_reg.reserve(renamed, *v);
-    }
+    // Update port registry: move every reservation from old_name to new_name.
+    port_reg.rename_project(&args.old_name, &args.new_name);
     port_reg.save()?;
     output::success("Ports aktualisiert");
+
+    // Keep container names in the compose file in sync with the new
+    // project name (they were rendered as literal `<old_name>-<service>`
+    // strings at creation time and don't update themselves).
+    let compose_path = new_path.join("docker-compose.yml");
+    if let Ok(raw) = std::fs::read_to_string(&compose_path) {
+        let old_prefix = format!("container_name: {}-", args.old_name);
+        let new_prefix = format!("container_name: {}-", args.new_name);
+        if raw.contains(&old_prefix) {
+            let updated = raw.replace(&old_prefix, &new_prefix);
+            if crate::utils::fs::write_atomic(&compose_path, &updated).is_ok() {
+                output::success("Container-Namen in docker-compose.yml aktualisiert");
+            }
+        }
+    }
 
     // Update .skap.toml inside the project.
     if let Ok(Some(mut pf)) = ProjectFile::load(&new_path) {

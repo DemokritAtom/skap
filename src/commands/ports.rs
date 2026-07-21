@@ -26,13 +26,14 @@ async fn list(args: PortsListArgs) -> Result<()> {
     );
     println!("{}", "─".repeat(60).dimmed());
 
-    if reg.ports.is_empty() {
+    let entries = reg.entries();
+    if entries.is_empty() {
         output::info("Keine Ports reserviert.");
         return Ok(());
     }
 
     let mut shown = 0usize;
-    for (key, port) in &reg.ports {
+    for (key, port) in &entries {
         let in_use = !port_core::is_port_free(*port);
         if args.used && !in_use {
             continue;

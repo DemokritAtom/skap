@@ -36,11 +36,13 @@ pub fn find_free_port_excluding(base: u16, registry: &PortRegistry, extra: &[u16
         if !reserved.contains(&port) && !extra.contains(&port) && is_port_free(port) {
             return port;
         }
-        port = port.saturating_add(1);
-        if port == 0 {
-            // Wrap-around safety – should never hit in practice.
+        if port == u16::MAX {
+            // Exhausted the entire port space above `base` – give up and
+            // hand back the original base rather than looping forever
+            // (`saturating_add` would otherwise get stuck at u16::MAX).
             return base;
         }
+        port += 1;
     }
 }
 
@@ -62,9 +64,59 @@ pub fn assign_ports(
     for (svc, offset) in services {
         let preferred = base_port.saturating_add(*offset);
         let port = find_free_port_excluding(preferred, registry, &taken_now);
-        registry.reserve(format!("{project}-{svc}"), port);
+        registry.reserve(project, svc, port);
         taken_now.push(port);
         assigned.insert(svc.clone(), port);
     }
     assigned
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn find_free_port_excluding_skips_reserved_ports() {
+        let mut registry = PortRegistry::default();
+        registry.reserve("proj", "a", 3000);
+        registry.reserve("proj", "b", 3001);
+        // 3000 and 3001 are reserved (not necessarily bound), so the
+        // search should skip past both even though nothing is actually
+        // listening on them.
+        let port = find_free_port_excluding(3000, &registry, &[]);
+        assert!(port >= 3002, "expected port >= 3002, got {port}");
+    }
+
+    #[test]
+    fn find_free_port_excluding_skips_extra() {
+        let registry = PortRegistry::default();
+        let port = find_free_port_excluding(3000, &registry, &[3000, 3001, 3002]);
+        assert!(port >= 3003, "expected port >= 3003, got {port}");
+    }
+
+    /// Regression test: searching from near the top of the u16 range must
+    /// terminate instead of looping forever. Every port from `base` to
+    /// `u16::MAX` is marked reserved, forcing the search to walk all the
+    /// way to the top and hit the give-up path.
+    #[test]
+    fn find_free_port_excluding_terminates_near_u16_max() {
+        let mut registry = PortRegistry::default();
+        let base: u16 = 65530;
+        for (i, port) in (base..=u16::MAX).enumerate() {
+            registry.reserve("proj", &format!("svc{i}"), port);
+        }
+        // Must return (not hang) even though every candidate from `base`
+        // upward is reserved.
+        let port = find_free_port_excluding(base, &registry, &[]);
+        assert_eq!(port, base, "should fall back to `base` when exhausted");
+    }
+
+    #[test]
+    fn assign_ports_gives_distinct_ports_per_service() {
+        let mut registry = PortRegistry::default();
+        let services = vec![("app".to_string(), 0u16), ("db".to_string(), 1u16)];
+        let assigned = assign_ports("proj", &services, &mut registry, 4000);
+        assert_ne!(assigned["app"], assigned["db"]);
+        assert_eq!(registry.reserved().len(), 2);
+    }
 }

@@ -102,7 +102,7 @@ fn fix_ports(
     entry.ports.sort();
     port_reg.release_project(project);
     for (i, (_, n)) in changes.iter().enumerate() {
-        port_reg.reserve(format!("{project}-svc{i}"), *n);
+        port_reg.reserve(project, &format!("svc{i}"), *n);
     }
     port_reg.save()?;
 

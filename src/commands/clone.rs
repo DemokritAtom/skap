@@ -10,6 +10,7 @@ use anyhow::{bail, Context, Result};
 use chrono::Utc;
 
 use crate::cli::CloneArgs;
+use crate::commands::common::validate_project_name;
 use crate::config::ports::PortRegistry;
 use crate::config::registry::{ProjectEntry, Registry};
 use crate::core::{detect, project_file::ProjectFile};
@@ -21,6 +22,9 @@ pub async fn run(args: CloneArgs) -> Result<()> {
     if derived_name.is_empty() {
         bail!("could not derive a project name from URL '{}'", args.url);
     }
+    validate_project_name(&derived_name).with_context(|| {
+        "could not derive a valid project name from the URL – pass one explicitly: `skap clone <url> <name>`"
+    })?;
     let target = std::env::current_dir()?.join(&derived_name);
     if target.exists() {
         bail!("target directory already exists: {}", target.display());
@@ -69,7 +73,6 @@ pub async fn run(args: CloneArgs) -> Result<()> {
             if let Ok(raw) = std::fs::read_to_string(&compose_path) {
                 for (i, p) in detect::parse_compose_ports(&raw).into_iter().enumerate() {
                     map.insert(format!("port{}", i + 1), p);
-                    port_reg.reserve(format!("{derived_name}-port{}", i + 1), p);
                 }
             }
             (det.to_string(), map)
@@ -77,7 +80,7 @@ pub async fn run(args: CloneArgs) -> Result<()> {
 
     // Register every port from .skap.toml in the global port registry.
     for (k, v) in &ports_map {
-        port_reg.reserve(format!("{derived_name}-{k}"), *v);
+        port_reg.reserve(&derived_name, k, *v);
     }
 
     let entry = ProjectEntry {

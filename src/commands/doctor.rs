@@ -70,8 +70,8 @@ pub async fn run() -> Result<()> {
     println!();
     section("PORT-KONFLIKTE");
     let mut by_port: HashMap<u16, Vec<String>> = HashMap::new();
-    for (key, port) in &port_reg.ports {
-        by_port.entry(*port).or_default().push(key.clone());
+    for (key, port) in port_reg.entries() {
+        by_port.entry(port).or_default().push(key);
     }
     let mut had_conflict = false;
     for (port, owners) in &by_port {

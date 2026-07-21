@@ -130,6 +130,9 @@ pub struct AddArgs {
     pub feature: String,
     /// Project name. If omitted, uses the project of the current directory.
     pub project: Option<String>,
+    /// Create the remote as private (only relevant for `github`/`gitlab`).
+    #[arg(long)]
+    pub private: bool,
 }
 
 #[derive(Debug, clap::Args)]
