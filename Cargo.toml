@@ -1,6 +1,6 @@
 [package]
 name = "skap"
-version = "0.1.3"
+version = "0.1.4"
 edition = "2021"
 authors = ["skap contributors"]
 description = "A lean, fast Linux CLI for managing dev projects"

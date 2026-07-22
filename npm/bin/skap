@@ -1,9 +1,24 @@
 #!/usr/bin/env node
 // Thin shim that execs the platform binary downloaded by install.js.
+// install.js overwrites this exact file with the native binary on
+// success, so under normal operation this JS never actually runs.
 'use strict';
 const path = require('path');
 const { spawn } = require('child_process');
 const bin = path.join(__dirname, '..', 'bin', 'skap');
+
+// If install.js's postinstall never ran or failed (offline install,
+// unsupported platform, network blocked), `bin` still resolves to this
+// very file. Spawning it would just re-launch this same shim forever.
+if (path.resolve(bin) === path.resolve(__filename)) {
+  console.error(
+    '[skap] native binary missing – postinstall did not download it.\n' +
+      '[skap] retry with: npm install -g @demokrit/skap --foreground-scripts\n' +
+      '[skap] or download manually: https://github.com/DemokritAtom/skap/releases'
+  );
+  process.exit(1);
+}
+
 const child = spawn(bin, process.argv.slice(2), { stdio: 'inherit' });
 child.on('exit', (code) => process.exit(code ?? 1));
 child.on('error', (err) => {
