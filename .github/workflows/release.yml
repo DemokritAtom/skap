@@ -73,9 +73,11 @@ jobs:
           node-version: '20'
           registry-url: 'https://registry.npmjs.org'
       - name: Sync version
+        working-directory: npm
         run: |
           VERSION=${GITHUB_REF#refs/tags/v}
-          npm --prefix npm version "$VERSION" --no-git-tag-version --allow-same-version
-      - run: npm --prefix npm publish --access public
+          npm version "$VERSION" --no-git-tag-version --allow-same-version
+      - run: npm publish --access public
+        working-directory: npm
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
