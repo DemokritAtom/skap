@@ -1,6 +1,6 @@
 {
   "name": "@demokrit/skap",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A lean, fast Linux/macOS CLI for managing dev projects",
   "bin": {
     "skap": "bin/skap"
